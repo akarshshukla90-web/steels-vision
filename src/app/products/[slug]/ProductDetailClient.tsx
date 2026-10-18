@@ -250,7 +250,7 @@ export default function ProductDetailClient({
 
         {/* Right Column: 3D Interactive Model Viewer with Volumetric Studio Stage */}
         <div className="lg:col-span-6 w-full">
-          <div className="relative w-full h-[540px] sm:h-[620px] rounded-3xl overflow-hidden border border-white/15 shadow-2xl bg-[#030508] group">
+          <div className="relative w-full h-[620px] sm:h-[680px] rounded-3xl overflow-hidden border border-white/15 shadow-2xl bg-[#030508] group">
             {/* Volumetric Studio Rim Backlights */}
             <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_35%,rgba(56,189,248,0.14),transparent_65%)]" />
             <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_80%_80%,rgba(239,68,68,0.08),transparent_60%)]" />

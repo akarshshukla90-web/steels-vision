@@ -81,8 +81,8 @@ export default function MetalHeroScene({
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-    camera.position.set(2.4, 1.5, 4.6);
+    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+    camera.position.set(2.4, 1.85, 4.6);
     cameraRef.current = camera;
 
     // 2. High-Performance PBR WebGL Renderer
@@ -110,7 +110,7 @@ export default function MetalHeroScene({
     controls.rotateSpeed = 0.85;
     controls.minPolarAngle = 0.05;
     controls.maxPolarAngle = Math.PI - 0.05;
-    controls.target.set(0, 0, 0);
+    controls.target.set(0, 0.35, 0);
     controlsRef.current = controls;
 
     controls.addEventListener("start", () => setIsInteracting(true));
@@ -253,6 +253,7 @@ export default function MetalHeroScene({
 
     // 8. Luxury Studio Stage Turntable Pedestal
     const stageGroup = new THREE.Group();
+    stageGroup.position.set(0, 0.35, 0);
     scene.add(stageGroup);
 
     // Circular Turntable Plinth
@@ -264,7 +265,7 @@ export default function MetalHeroScene({
       envMap: envMap,
     });
     const pedestal = new THREE.Mesh(pedestalGeo, pedestalMat);
-    pedestal.position.set(0, -1.45, 0);
+    pedestal.position.set(0, -1.25, 0);
     stageGroup.add(pedestal);
 
     // Concentric Turntable Rim Glow Ring
@@ -277,7 +278,7 @@ export default function MetalHeroScene({
     });
     const stageRing = new THREE.Mesh(stageRingGeo, stageRingMat);
     stageRing.rotation.x = Math.PI / 2;
-    stageRing.position.set(0, -1.405, 0);
+    stageRing.position.set(0, -1.205, 0);
     stageGroup.add(stageRing);
 
     // Concentric Inner Stage Track
@@ -290,7 +291,7 @@ export default function MetalHeroScene({
     });
     const innerTrack = new THREE.Mesh(innerTrackGeo, innerTrackMat);
     innerTrack.rotation.x = Math.PI / 2;
-    innerTrack.position.set(0, -1.405, 0);
+    innerTrack.position.set(0, -1.205, 0);
     stageGroup.add(innerTrack);
 
     // Holographic Ambient Particulates
@@ -315,6 +316,7 @@ export default function MetalHeroScene({
 
     // 9. PROCEDURAL 3D MODELS (ALL 8 CORE PRODUCTS + EXPLODED VIEW SUPPORT)
     const elementsGroup = new THREE.Group();
+    elementsGroup.position.set(0, 0.35, 0);
     elementsGroupRef.current = elementsGroup;
     scene.add(elementsGroup);
 
@@ -748,8 +750,8 @@ export default function MetalHeroScene({
 
   const handleResetCamera = () => {
     if (!controlsRef.current || !cameraRef.current) return;
-    cameraRef.current.position.set(2.4, 1.5, 4.6);
-    controlsRef.current.target.set(0, 0, 0);
+    cameraRef.current.position.set(2.4, 1.85, 4.6);
+    controlsRef.current.target.set(0, 0.35, 0);
     controlsRef.current.update();
   };
 
@@ -765,7 +767,7 @@ export default function MetalHeroScene({
   ];
 
   return (
-    <div className="relative w-full h-full min-h-[580px] lg:min-h-[660px] flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#05070B]/70 backdrop-blur-xl shadow-2xl">
+    <div className="relative w-full h-full min-h-[620px] lg:min-h-[680px] flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#030508]/80 backdrop-blur-xl shadow-2xl">
       {/* 1. CINEMATIC ATMOSPHERIC BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-[420px] h-[420px] bg-red-600/10 rounded-full blur-[120px] animate-pulse" />
@@ -782,14 +784,17 @@ export default function MetalHeroScene({
       />
 
       {/* 3. TOP TELEMETRY HUD */}
-      <div className="relative z-10 w-full p-4 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/80 border border-white/10 backdrop-blur-xl text-[11px] font-mono text-slate-300 pointer-events-auto shadow-lg">
+      <div className="relative z-10 w-full p-3 sm:p-4 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/85 border border-white/10 backdrop-blur-xl text-[11px] font-mono text-slate-300 pointer-events-auto shadow-lg">
           <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="text-white font-semibold">WEBGL PBR 2.0</span>
           <span className="text-slate-600">|</span>
           <span className="text-cyan-400">{fpsDisplay} FPS</span>
           <span className="text-slate-600">|</span>
-          <span className="text-slate-400">PBR ANISOTROPIC</span>
+          <span className="text-slate-400 hidden sm:inline-flex items-center gap-1">
+            <Move className="h-3 w-3 text-cyan-400" />
+            360&deg; Orbit
+          </span>
         </div>
 
         {/* REMOTION BRAND FILM & EXPLODE VIEW BUTTONS */}
@@ -797,19 +802,19 @@ export default function MetalHeroScene({
           <button
             type="button"
             onClick={() => setIsCinemaOpen(true)}
-            className="min-h-[36px] px-3.5 py-1.5 rounded-full text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-xl bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 group"
+            className="min-h-[34px] px-3.5 py-1 rounded-full text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-xl bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 group"
           >
             <Play className="h-3.5 w-3.5 fill-red-400 group-hover:scale-110 transition-transform" />
-            <span>Brand Film (Remotion)</span>
+            <span>Brand Film</span>
           </button>
 
           <button
             type="button"
             onClick={() => setIsExploded((prev) => !prev)}
-            className={`min-h-[36px] px-3.5 py-1.5 rounded-full text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-xl ${
+            className={`min-h-[34px] px-3.5 py-1 rounded-full text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-xl ${
               isExploded
-                ? "bg-[#FF3B30] text-white shadow-red-500/30 border border-red-400"
-                : "bg-slate-950/80 hover:bg-slate-900 text-slate-200 border border-white/15"
+                ? "bg-[#EF4444] text-white shadow-red-500/30 border border-red-400"
+                : "bg-slate-950/85 hover:bg-slate-900 text-slate-200 border border-white/15"
             }`}
           >
             <Split className="h-3.5 w-3.5" />
@@ -818,38 +823,30 @@ export default function MetalHeroScene({
         </div>
       </div>
 
-      {/* 4. DRAG HINT PILL */}
-      <div className="relative z-10 mx-auto pointer-events-none px-4">
-        <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950/75 border border-cyan-500/25 text-xs font-mono text-slate-200 backdrop-blur-xl shadow-2xl">
-          <Move className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
-          <span>Full 360&deg; Orbit &bull; Click &amp; Drag Anywhere on Canvas</span>
-        </div>
-      </div>
-
-      {/* 5. FROSTED GLASS DYNAMIC COCKPIT CONTROLS */}
-      <div className="relative z-10 w-full p-3 sm:p-4 pointer-events-auto">
-        <div className="w-full glass-panel bg-slate-950/90 border border-white/15 rounded-2xl p-3 sm:p-4 shadow-2xl flex flex-col gap-3 backdrop-blur-2xl">
-          {/* Row 1: Product 3D Models Selector (Unless compact mode requested) */}
+      {/* 4. FROSTED GLASS DYNAMIC COCKPIT CONTROLS (STREAMLINED & NON-OVERLAPPING) */}
+      <div className="relative z-10 w-full p-2.5 sm:p-3 pointer-events-auto mt-auto">
+        <div className="w-full glass-panel bg-[#030508]/85 border border-white/10 rounded-2xl p-2.5 sm:p-3 shadow-2xl flex flex-col gap-2 backdrop-blur-2xl">
+          {/* Row 1: Product 3D Models Selector */}
           {!compactControls && (
-            <div className="space-y-1.5 pb-2.5 border-b border-white/10">
-              <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-slate-400">
-                <span className="flex items-center gap-1.5">
-                  <Layers className="h-3 w-3 text-cyan-400" />
-                  Select 3D Metal Product Model:
+            <div className="space-y-1 pb-1.5 border-b border-white/8">
+              <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-slate-400 px-0.5">
+                <span className="flex items-center gap-1 text-cyan-400">
+                  <Layers className="h-3 w-3" />
+                  Select Model:
                 </span>
                 <span className="text-slate-500 font-normal">8 Certified Shapes</span>
               </div>
 
-              <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-white/5">
+              <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 bg-slate-950/70 p-1 rounded-xl border border-white/5">
                 {productTabs.map((tab) => (
                   <button
                     key={tab.id}
                     type="button"
                     onClick={() => setActiveModel(tab.id)}
-                    className={`min-h-[40px] px-2 py-1.5 rounded-lg text-xs font-semibold transition-all flex flex-col items-center justify-center leading-tight ${
+                    className={`py-1 px-1.5 rounded-lg text-[11px] font-semibold transition-all flex items-center justify-center text-center ${
                       activeModel === tab.id
-                        ? "bg-[#FF3B30] text-white shadow-lg shadow-red-500/30 scale-[1.02]"
-                        : "text-slate-400 hover:text-white hover:bg-slate-800"
+                        ? "bg-[#EF4444] text-white shadow-md shadow-red-500/30 font-bold"
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
                     }`}
                   >
                     <span>{tab.label}</span>
@@ -860,14 +857,14 @@ export default function MetalHeroScene({
           )}
 
           {/* Row 2: Metallurgy Shader Finishes + Reset Camera Button */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-0.5">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1 shrink-0">
                 <Zap className="h-3 w-3 text-amber-400" />
                 Finish:
               </span>
 
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1">
                 {[
                   { id: "ss316-mirror", label: "Mirror Stainless", style: "bg-slate-100 text-slate-950 font-bold" },
                   { id: "inconel625", label: "Inconel 625", style: "bg-gradient-to-r from-amber-300 to-amber-500 text-slate-950 font-bold" },
@@ -879,9 +876,9 @@ export default function MetalHeroScene({
                     key={fin.id}
                     type="button"
                     onClick={() => setActiveFinish(fin.id as MaterialFinish)}
-                    className={`min-h-[36px] px-2.5 py-1 rounded-lg text-xs font-mono transition-all ${
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono transition-all ${
                       activeFinish === fin.id
-                        ? `${fin.style} shadow-md`
+                        ? `${fin.style} shadow-sm`
                         : "bg-slate-900/90 text-slate-400 hover:text-white hover:bg-slate-800"
                     }`}
                   >
@@ -894,11 +891,11 @@ export default function MetalHeroScene({
             <button
               type="button"
               onClick={handleResetCamera}
-              className="min-h-[36px] px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-white/10 text-xs font-mono text-slate-300 hover:text-white flex items-center justify-center gap-1.5 transition-all self-end sm:self-auto"
+              className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-white/10 text-[11px] font-mono text-slate-300 hover:text-white flex items-center justify-center gap-1 transition-all self-end sm:self-auto shrink-0"
               title="Reset 360° Orbit View"
             >
-              <RotateCcw className="h-3.5 w-3.5 text-cyan-400" />
-              <span>Reset Angle</span>
+              <RotateCcw className="h-3 w-3 text-cyan-400" />
+              <span>Reset</span>
             </button>
           </div>
         </div>

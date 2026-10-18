@@ -7,6 +7,9 @@ import RFQModal from "@/components/rfq/RFQModal";
 import JsonLd from "@/components/seo/JsonLd";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import { RFQProvider } from "@/hooks/useRFQBasket";
+import { AmbienceProvider } from "@/hooks/useAmbience";
+import RemotionBackground from "@/components/remotion/RemotionBackground";
+import BrandReelModal from "@/components/remotion/BrandReelModal";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -60,15 +63,19 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-[#05070B] text-slate-100 flex flex-col min-h-screen selection:bg-red-500/30 selection:text-white`}
+        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-[#05070B] text-slate-100 flex flex-col min-h-screen selection:bg-red-500/30 selection:text-white relative`}
       >
         <SmoothScroll>
-          <RFQProvider>
-            <FloatingNav />
-            <main className="flex-1 industrial-grid pt-18 sm:pt-24">{children}</main>
-            <Footer />
-            <RFQModal />
-          </RFQProvider>
+          <AmbienceProvider>
+            <RFQProvider>
+              <RemotionBackground />
+              <FloatingNav />
+              <main className="flex-1 industrial-grid pt-18 sm:pt-24 relative z-0">{children}</main>
+              <Footer />
+              <RFQModal />
+              <BrandReelModal />
+            </RFQProvider>
+          </AmbienceProvider>
         </SmoothScroll>
       </body>
     </html>

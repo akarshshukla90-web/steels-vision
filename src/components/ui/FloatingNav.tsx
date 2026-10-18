@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { COMPANY_INFO } from "@/content/company";
 import { useRFQBasket } from "@/hooks/useRFQBasket";
+import { useAmbience } from "@/hooks/useAmbience";
 import {
   FileText,
   PhoneCall,
@@ -13,10 +14,13 @@ import {
   ChevronRight,
   Layers,
   Calculator,
+  Play,
+  Sparkles,
 } from "lucide-react";
 
 export default function FloatingNav() {
   const { totalItemsCount, openRFQModal } = useRFQBasket();
+  const { mode, setMode, setIsCinemaOpen } = useAmbience();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -27,6 +31,12 @@ export default function FloatingNav() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const cycleAmbience = () => {
+    if (mode === "molten") setMode("blueprint");
+    else if (mode === "blueprint") setMode("cryo");
+    else setMode("molten");
+  };
 
   return (
     <header className="fixed top-3 sm:top-5 left-0 right-0 z-50 flex justify-center px-3 pointer-events-none">
@@ -69,34 +79,47 @@ export default function FloatingNav() {
             Products
           </Link>
           <Link href="#calculator-section" className="hover:text-cyan-400 transition-colors">
-            Weight Calculator
+            Calculator
           </Link>
           <Link href="#compliance-section" className="hover:text-cyan-400 transition-colors">
             Compliance
           </Link>
           <Link href="#lead-capture-section" className="hover:text-cyan-400 transition-colors">
-            Direct Lead
+            Lead Capture
           </Link>
         </nav>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2.5">
-          <a
-            href={`tel:${COMPANY_INFO.phoneRaw}`}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 border border-white/10 text-[11px] font-mono text-slate-300 hover:text-emerald-400 transition-colors"
+        <div className="flex items-center gap-2">
+          {/* Remotion Brand Reel Cinema Button */}
+          <button
+            type="button"
+            onClick={() => setIsCinemaOpen(true)}
+            className="min-h-[38px] px-3 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-red-500/30 text-white font-mono text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md hover:shadow-red-500/20 active:scale-95 group"
+            title="Watch Steels Vision 4K Industrial Film (Remotion Engine)"
           >
-            <PhoneCall className="h-3 w-3 text-emerald-400" />
-            <span>{COMPANY_INFO.phone}</span>
-          </a>
+            <Play className="h-3.5 w-3.5 text-red-500 fill-red-500 group-hover:scale-110 transition-transform" />
+            <span className="hidden lg:inline text-[11px] uppercase tracking-wider">Brand Reel</span>
+          </button>
+
+          {/* Ambience Background Switcher */}
+          <button
+            type="button"
+            onClick={cycleAmbience}
+            className="hidden sm:flex min-h-[38px] px-2.5 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-white/10 text-slate-300 hover:text-white font-mono text-[10px] uppercase items-center gap-1.5 transition-all"
+            title="Cycle Remotion Dynamic Background Style"
+          >
+            <Sparkles className="h-3 w-3 text-amber-400" />
+            <span>{mode}</span>
+          </button>
 
           {/* High-Conversion RFQ Dynamic Island Button */}
           <button
             onClick={openRFQModal}
-            className="min-h-[40px] px-3.5 py-1.5 rounded-full bg-[#FF3B30] hover:bg-red-600 text-white font-bold text-xs font-mono uppercase tracking-wider shadow-lg shadow-red-500/25 transition-all flex items-center gap-1.5 active:scale-95"
+            className="min-h-[38px] px-3.5 py-1.5 rounded-full bg-[#FF3B30] hover:bg-red-600 text-white font-bold text-xs font-mono uppercase tracking-wider shadow-lg shadow-red-500/25 transition-all flex items-center gap-1.5 active:scale-95"
           >
             <FileText className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">RFQ Basket</span>
-            <span className="sm:hidden">RFQ</span>
+            <span className="hidden sm:inline">RFQ</span>
             {totalItemsCount > 0 && (
               <span className="px-1.5 py-0.2 rounded-full bg-white text-slate-950 font-black text-[10px] animate-bounce">
                 {totalItemsCount}
@@ -107,7 +130,7 @@ export default function FloatingNav() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="md:hidden min-h-[40px] min-w-[40px] p-2 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-white/10 flex items-center justify-center"
+            className="md:hidden min-h-[38px] min-w-[38px] p-2 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-white/10 flex items-center justify-center"
             aria-label="Toggle Navigation"
           >
             {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -118,6 +141,33 @@ export default function FloatingNav() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="pointer-events-auto md:hidden fixed top-18 left-4 right-4 rounded-2xl border border-white/15 bg-slate-950/95 backdrop-blur-2xl p-4 space-y-2 font-mono text-xs uppercase shadow-2xl animate-fade-in">
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setIsCinemaOpen(true);
+            }}
+            className="w-full min-h-[44px] flex items-center justify-between px-3 rounded-xl bg-red-500/15 text-red-400 border border-red-500/30"
+          >
+            <span className="flex items-center gap-2">
+              <Play className="h-4 w-4 fill-red-400" />
+              Watch 4K Brand Reel (Remotion)
+            </span>
+            <span className="text-[10px] font-mono">60 FPS</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              cycleAmbience();
+            }}
+            className="w-full min-h-[44px] flex items-center justify-between px-3 rounded-xl text-slate-300 hover:text-white hover:bg-slate-900 border border-white/5"
+          >
+            <span className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-amber-400" />
+              Ambience VFX Mode
+            </span>
+            <span className="text-amber-400 font-bold">{mode}</span>
+          </button>
           <Link
             href="#hero-3d"
             onClick={() => setMobileMenuOpen(false)}

@@ -14,7 +14,9 @@ import {
   Boxes,
   Split,
   Eye,
+  Play,
 } from "lucide-react";
+import { useAmbience } from "@/hooks/useAmbience";
 
 export type Product3DModel =
   | "pipes"
@@ -48,6 +50,7 @@ export default function MetalHeroScene({
   const [fpsDisplay, setFpsDisplay] = useState(60);
   const [isInteracting, setIsInteracting] = useState(false);
   const [isExploded, setIsExploded] = useState(false);
+  const { setIsCinemaOpen } = useAmbience();
 
   // Scene references
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -733,7 +736,7 @@ export default function MetalHeroScene({
   ];
 
   return (
-    <div className="relative w-full h-full min-h-[580px] lg:min-h-[660px] flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#05070B] shadow-2xl">
+    <div className="relative w-full h-full min-h-[580px] lg:min-h-[660px] flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#05070B]/70 backdrop-blur-xl shadow-2xl">
       {/* 1. CINEMATIC ATMOSPHERIC BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-[420px] h-[420px] bg-red-600/10 rounded-full blur-[120px] animate-pulse" />
@@ -760,8 +763,17 @@ export default function MetalHeroScene({
           <span className="text-slate-400">PBR ANISOTROPIC</span>
         </div>
 
-        {/* EXPLODE VIEW / ASSEMBLY BREAKDOWN TOGGLE */}
+        {/* REMOTION BRAND FILM & EXPLODE VIEW BUTTONS */}
         <div className="flex items-center gap-2 pointer-events-auto">
+          <button
+            type="button"
+            onClick={() => setIsCinemaOpen(true)}
+            className="min-h-[36px] px-3.5 py-1.5 rounded-full text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-xl bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 group"
+          >
+            <Play className="h-3.5 w-3.5 fill-red-400 group-hover:scale-110 transition-transform" />
+            <span>Brand Film (Remotion)</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setIsExploded((prev) => !prev)}
@@ -772,7 +784,7 @@ export default function MetalHeroScene({
             }`}
           >
             <Split className="h-3.5 w-3.5" />
-            <span>{isExploded ? "Exploded CAD View: Active" : "Explode Assembly (X-Ray)"}</span>
+            <span>{isExploded ? "Exploded CAD: Active" : "Explode Assembly"}</span>
           </button>
         </div>
       </div>

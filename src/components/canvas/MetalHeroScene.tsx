@@ -81,8 +81,8 @@ export default function MetalHeroScene({
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-    camera.position.set(2.4, 1.85, 4.6);
+    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+    camera.position.set(2.4, 1.5, 4.6);
     cameraRef.current = camera;
 
     // 2. High-Performance PBR WebGL Renderer
@@ -110,7 +110,7 @@ export default function MetalHeroScene({
     controls.rotateSpeed = 0.85;
     controls.minPolarAngle = 0.05;
     controls.maxPolarAngle = Math.PI - 0.05;
-    controls.target.set(0, 0.35, 0);
+    controls.target.set(0, 0, 0);
     controlsRef.current = controls;
 
     controls.addEventListener("start", () => setIsInteracting(true));
@@ -251,72 +251,54 @@ export default function MetalHeroScene({
     rimRed.position.set(4.5, -2, -4);
     scene.add(rimRed);
 
-    // 8. Luxury Studio Stage Turntable Pedestal
-    const stageGroup = new THREE.Group();
-    stageGroup.position.set(0, 0.35, 0);
-    scene.add(stageGroup);
+    // 8. Luxury Holographic Background Geometry
+    const bgGroup = new THREE.Group();
+    scene.add(bgGroup);
 
-    // Circular Turntable Plinth
-    const pedestalGeo = new THREE.CylinderGeometry(2.35, 2.42, 0.08, 96);
-    const pedestalMat = new THREE.MeshStandardMaterial({
-      color: 0x090d16,
-      metalness: 0.95,
-      roughness: 0.22,
-      envMap: envMap,
-    });
-    const pedestal = new THREE.Mesh(pedestalGeo, pedestalMat);
-    pedestal.position.set(0, -1.25, 0);
-    stageGroup.add(pedestal);
-
-    // Concentric Turntable Rim Glow Ring
-    const stageRingGeo = new THREE.RingGeometry(2.34, 2.37, 96);
-    const stageRingMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
+    const ring1Geo = new THREE.RingGeometry(2.4, 2.415, 96);
+    const ring1Mat = new THREE.MeshBasicMaterial({
+      color: 0x00d2ff,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.45,
+      opacity: 0.18,
     });
-    const stageRing = new THREE.Mesh(stageRingGeo, stageRingMat);
-    stageRing.rotation.x = Math.PI / 2;
-    stageRing.position.set(0, -1.205, 0);
-    stageGroup.add(stageRing);
+    const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
+    ring1.rotation.x = Math.PI / 2;
+    bgGroup.add(ring1);
 
-    // Concentric Inner Stage Track
-    const innerTrackGeo = new THREE.RingGeometry(1.6, 1.615, 96);
-    const innerTrackMat = new THREE.MeshBasicMaterial({
-      color: 0xef4444,
+    const ring2Geo = new THREE.RingGeometry(2.65, 2.665, 96);
+    const ring2Mat = new THREE.MeshBasicMaterial({
+      color: 0xff3b30,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.15,
     });
-    const innerTrack = new THREE.Mesh(innerTrackGeo, innerTrackMat);
-    innerTrack.rotation.x = Math.PI / 2;
-    innerTrack.position.set(0, -1.205, 0);
-    stageGroup.add(innerTrack);
+    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+    ring2.rotation.x = Math.PI / 3;
+    ring2.rotation.y = Math.PI / 6;
+    bgGroup.add(ring2);
 
-    // Holographic Ambient Particulates
-    const particleCount = 120;
+    const particleCount = 180;
     const particlePositions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
-      particlePositions[i * 3] = (Math.random() - 0.5) * 8;
-      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 6;
+      particlePositions[i * 3] = (Math.random() - 0.5) * 10;
+      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 8;
       particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 8;
     }
     const particleGeo = new THREE.BufferGeometry();
     particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
     const particleMat = new THREE.PointsMaterial({
       color: 0x38bdf8,
-      size: 0.035,
+      size: 0.04,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.7,
       blending: THREE.AdditiveBlending,
     });
     const particles = new THREE.Points(particleGeo, particleMat);
-    stageGroup.add(particles);
+    bgGroup.add(particles);
 
     // 9. PROCEDURAL 3D MODELS (ALL 8 CORE PRODUCTS + EXPLODED VIEW SUPPORT)
     const elementsGroup = new THREE.Group();
-    elementsGroup.position.set(0, 0.35, 0);
     elementsGroupRef.current = elementsGroup;
     scene.add(elementsGroup);
 
@@ -665,9 +647,9 @@ export default function MetalHeroScene({
         part.mesh.position.lerp(target, 0.08);
       });
 
-      // Background stage turntable tracks
-      stageRing.rotation.z += 0.0015;
-      innerTrack.rotation.z -= 0.002;
+      // Background rings
+      ring1.rotation.z += 0.0015;
+      ring2.rotation.z -= 0.002;
 
       // Bokeh particle float
       const pos = particleGeo.attributes.position.array as Float32Array;
@@ -750,8 +732,8 @@ export default function MetalHeroScene({
 
   const handleResetCamera = () => {
     if (!controlsRef.current || !cameraRef.current) return;
-    cameraRef.current.position.set(2.4, 1.85, 4.6);
-    controlsRef.current.target.set(0, 0.35, 0);
+    cameraRef.current.position.set(2.4, 1.5, 4.6);
+    controlsRef.current.target.set(0, 0, 0);
     controlsRef.current.update();
   };
 

@@ -100,22 +100,23 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <button
             onClick={openRFQModal}
-            className="relative px-4 py-2.5 rounded-xl bg-[#E63946] hover:bg-[#D62839] text-white font-bold text-xs font-mono uppercase tracking-wider shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transition-all flex items-center gap-2"
+            className="relative min-h-[44px] px-4 py-2.5 rounded-xl bg-[#E63946] hover:bg-[#D62839] text-white font-bold text-xs font-mono uppercase tracking-wider shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transition-all flex items-center gap-2"
           >
             <FileText className="h-4 w-4" />
             <span className="hidden sm:inline">RFQ Basket</span>
             <span className="sm:hidden">RFQ</span>
             {totalItemsCount > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-white text-slate-950 font-black text-[11px] animate-bounce">
+              <span className="px-2 py-0.5 rounded-full bg-white text-slate-950 font-black text-[11px] animate-bounce">
                 {totalItemsCount}
               </span>
             )}
           </button>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle (Min 44x44 touch target) */}
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="lg:hidden p-2 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-white/10"
+            aria-label="Toggle Navigation Menu"
+            className="lg:hidden min-h-[44px] min-w-[44px] p-2.5 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-white/10 flex items-center justify-center transition-colors"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -124,39 +125,39 @@ export default function Header() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-slate-950 p-4 space-y-3 font-mono text-xs uppercase">
+        <div className="lg:hidden border-t border-white/10 bg-slate-950/95 backdrop-blur-xl p-4 space-y-2 font-mono text-xs uppercase animate-fade-in">
           <Link
             href="#hero-3d"
             onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-slate-300 hover:text-cyan-400"
+            className="min-h-[44px] flex items-center px-3 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
           >
             3D Visualizer
           </Link>
           <Link
             href="#calculator-section"
             onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-slate-300 hover:text-cyan-400"
+            className="min-h-[44px] flex items-center px-3 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
           >
             Weight Calculator
           </Link>
           <Link
             href="#catalog-section"
             onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-slate-300 hover:text-cyan-400"
+            className="min-h-[44px] flex items-center px-3 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
           >
-            Product Catalog
+            Product Catalog &amp; Grades
           </Link>
           <Link
             href="#compliance-section"
             onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-slate-300 hover:text-cyan-400"
+            className="min-h-[44px] flex items-center px-3 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
           >
-            Compliance & TPI
+            Compliance &amp; TPI
           </Link>
           <Link
             href="#logistics-section"
             onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-slate-300 hover:text-cyan-400"
+            className="min-h-[44px] flex items-center px-3 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
           >
             Global Ports
           </Link>

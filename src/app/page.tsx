@@ -6,6 +6,7 @@ import MetalHeroScene from "@/components/canvas/MetalHeroScene";
 import WeightCalculator from "@/components/calculator/WeightCalculator";
 import ProductCatalog from "@/components/catalog/ProductCatalog";
 import TrustMatrix from "@/components/trust/TrustMatrix";
+import DirectLeadCapture from "@/components/rfq/DirectLeadCapture";
 import { COMPANY_INFO } from "@/content/company";
 import { useRFQBasket } from "@/hooks/useRFQBasket";
 import {
@@ -198,7 +199,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. HIGH-CONVERSION BOTTOM CALL TO ACTION */}
+      {/* 7. DIRECT LEAD CAPTURE & COMMERCIAL QUOTE FORM */}
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <DirectLeadCapture />
+      </section>
+
+      {/* 8. HIGH-CONVERSION BOTTOM CALL TO ACTION */}
       <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden border border-red-500/30 bg-gradient-to-r from-red-950/40 via-slate-950 to-slate-900 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-2xl">
           <div className="space-y-3 text-left max-w-2xl">

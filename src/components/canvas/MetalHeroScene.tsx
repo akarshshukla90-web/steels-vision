@@ -201,13 +201,26 @@ export default function MetalHeroScene({
         } else {
           grad.addColorStop(0, "#1e293b");
           grad.addColorStop(0.4, "#0f172a");
-          grad.addColorStop(1, "#030509");
+          grad.addColorStop(1, "#080a0f");
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, 256, 256);
 
-          // Specular rim light bars
-          ctx.fillStyle = "rgba(0, 210, 255, 0.22)";
-          ctx.fillRect(15, 0, 40, 256);
+          // Dual Thermal & Quench Specular Rim Reflection Bands
+          if (side === "px" || side === "pz") {
+            // Molten Amber forging reflection
+            const amberGrad = ctx.createLinearGradient(10, 0, 70, 0);
+            amberGrad.addColorStop(0, "rgba(249, 115, 22, 0.45)");
+            amberGrad.addColorStop(1, "rgba(249, 115, 22, 0)");
+            ctx.fillStyle = amberGrad;
+            ctx.fillRect(10, 0, 60, 256);
+          } else {
+            // Cool Titanium Quench reflection
+            const blueGrad = ctx.createLinearGradient(15, 0, 75, 0);
+            blueGrad.addColorStop(0, "rgba(56, 189, 248, 0.45)");
+            blueGrad.addColorStop(1, "rgba(56, 189, 248, 0)");
+            ctx.fillStyle = blueGrad;
+            ctx.fillRect(15, 0, 60, 256);
+          }
         }
         canvasList.push(c);
       });

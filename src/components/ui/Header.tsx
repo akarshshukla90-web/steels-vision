@@ -22,9 +22,9 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#0B0F19]/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 w-full border-b border-[#2A3241] bg-[#0F131C]/92 backdrop-blur-xl">
       {/* Top Industrial Notification Bar */}
-      <div className="w-full bg-slate-950/80 border-b border-white/5 py-1.5 px-4 sm:px-8 text-[11px] font-mono text-slate-400 flex flex-wrap items-center justify-between gap-3">
+      <div className="w-full bg-[#080A0F]/90 border-b border-[#2A3241]/60 py-1.5 px-4 sm:px-8 text-[11px] font-mono text-slate-400 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-1.5 text-emerald-400">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -59,7 +59,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         {/* Brand Identity */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#E63946] to-red-800 flex items-center justify-center text-white font-black font-mono text-lg shadow-lg shadow-red-500/20 group-hover:scale-105 transition-transform">
+          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#F97316] to-[#C2410C] flex items-center justify-center text-white font-black font-mono text-lg shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform">
             SV
           </div>
           <div>
@@ -100,7 +100,7 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <button
             onClick={openRFQModal}
-            className="relative min-h-[44px] px-4 py-2.5 rounded-xl bg-[#E63946] hover:bg-[#D62839] text-white font-bold text-xs font-mono uppercase tracking-wider shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transition-all flex items-center gap-2"
+            className="relative min-h-[44px] px-4 py-2.5 rounded-xl bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs font-mono uppercase tracking-wider shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 transition-all flex items-center gap-2 active:scale-95"
           >
             <FileText className="h-4 w-4" />
             <span className="hidden sm:inline">RFQ Basket</span>
@@ -116,7 +116,7 @@ export default function Header() {
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label="Toggle Navigation Menu"
-            className="lg:hidden min-h-[44px] min-w-[44px] p-2.5 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-white/10 flex items-center justify-center transition-colors"
+            className="lg:hidden min-h-[44px] min-w-[44px] p-2.5 rounded-xl text-slate-300 hover:text-white bg-[#0F131C] border border-[#2A3241] flex items-center justify-center transition-colors"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -125,11 +125,11 @@ export default function Header() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-slate-950/95 backdrop-blur-xl p-4 space-y-2 font-mono text-xs uppercase animate-fade-in">
+        <div className="lg:hidden border-t border-[#2A3241] bg-[#0F131C]/98 backdrop-blur-xl p-4 space-y-2 font-mono text-xs uppercase animate-fade-in">
           <Link
             href="#hero-3d"
             onClick={() => setMobileMenuOpen(false)}
-            className="min-h-[44px] flex items-center px-3 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
+            className="min-h-[44px] flex items-center px-3 rounded-lg text-slate-300 hover:text-white hover:bg-[#12161F] transition-colors"
           >
             3D Visualizer
           </Link>

@@ -129,7 +129,7 @@ export default function RFQModal() {
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ["#E63946", "#00D2FF", "#F1FAEE"],
+          colors: ["#F97316", "#38BDF8", "#F1FAEE"],
         });
       } catch (e) {
         // non-blocking
@@ -143,11 +143,11 @@ export default function RFQModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-fade-in overflow-y-auto">
-      <div className="relative w-full max-w-4xl max-h-[92vh] glass-panel bg-slate-950/95 border border-white/15 rounded-2xl shadow-2xl flex flex-col overflow-hidden my-auto">
+      <div className="relative w-full max-w-4xl max-h-[92vh] glass-panel bg-[#0F131C] border border-[#2A3241] rounded-2xl shadow-2xl flex flex-col overflow-hidden my-auto">
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-slate-900/60">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#2A3241] bg-[#080A0F]">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-[#E63946] flex items-center justify-center text-white font-bold font-mono text-sm">
+            <div className="h-8 w-8 rounded-lg bg-[#F97316] flex items-center justify-center text-white font-bold font-mono text-sm">
               SV
             </div>
             <div>
@@ -162,14 +162,14 @@ export default function RFQModal() {
 
           <button
             onClick={closeRFQModal}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-all"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-all active:scale-95"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Step Progress Bar */}
-        <div className="px-6 py-3 bg-slate-900/30 border-b border-white/5 flex items-center justify-between">
+        <div className="px-6 py-3 bg-[#080A0F] border-b border-[#2A3241] flex items-center justify-between">
           {[
             { num: 1, label: "Materials Basket" },
             { num: 2, label: "Incoterms & Logistics" },
@@ -180,7 +180,7 @@ export default function RFQModal() {
               <span
                 className={`h-5 w-5 rounded-full flex items-center justify-center font-bold text-[11px] ${
                   step === s.num
-                    ? "bg-[#E63946] text-white"
+                    ? "bg-[#F97316] text-white font-bold shadow-md shadow-orange-500/25"
                     : step > s.num
                     ? "bg-emerald-500 text-white"
                     : "bg-slate-800 text-slate-400"
@@ -394,7 +394,7 @@ export default function RFQModal() {
                   id="mtcCert"
                   checked={millTestCertRequired}
                   onChange={(e) => setMillTestCertRequired(e.target.checked)}
-                  className="h-4 w-4 rounded bg-slate-950 border-white/20 text-[#E63946] focus:ring-0"
+                  className="h-4 w-4 rounded bg-[#080A0F] border-[#2A3241] text-[#F97316] focus:ring-0"
                 />
                 <label htmlFor="mtcCert" className="text-xs text-slate-300 cursor-pointer">
                   Require official <strong>EN 10204 3.1 / 3.2 Mill Test Certificate</strong> with 100% PMI chemical and mechanical test values.
@@ -544,12 +544,12 @@ export default function RFQModal() {
 
         {/* Modal Footer Controls */}
         {step < 4 && (
-          <div className="px-6 py-4 border-t border-white/10 bg-slate-900/60 flex items-center justify-between">
+          <div className="px-6 py-4 border-t border-[#2A3241] bg-[#080A0F] flex items-center justify-between">
             {step > 1 ? (
               <button
                 type="button"
                 onClick={() => setStep((prev) => (prev - 1) as 1 | 2 | 3)}
-                className="px-4 py-2 rounded-xl text-xs font-mono text-slate-300 hover:text-white bg-slate-800 flex items-center gap-1.5 transition-colors"
+                className="px-4 py-2 rounded-xl text-xs font-mono text-slate-300 hover:text-white bg-[#0F131C] border border-[#2A3241] flex items-center gap-1.5 transition-colors active:scale-95"
               >
                 <ChevronLeft className="h-4 w-4" />
                 Back
@@ -562,7 +562,7 @@ export default function RFQModal() {
               <button
                 type="button"
                 onClick={() => setStep((prev) => (prev + 1) as 2 | 3)}
-                className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-[#E63946] hover:bg-[#D62839] flex items-center gap-1.5 shadow-lg shadow-red-500/20 transition-all"
+                className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-[#F97316] hover:bg-orange-600 flex items-center gap-1.5 shadow-lg shadow-orange-500/20 transition-all active:scale-95"
               >
                 Next Step
                 <ChevronRight className="h-4 w-4" />
@@ -572,7 +572,7 @@ export default function RFQModal() {
                 type="button"
                 disabled={isSubmitting}
                 onClick={handleSubmitQuote}
-                className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-[#E63946] hover:bg-[#D62839] disabled:opacity-50 flex items-center gap-2 shadow-lg shadow-red-500/25 transition-all"
+                className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-[#F97316] hover:bg-orange-600 disabled:opacity-50 flex items-center gap-2 shadow-lg shadow-orange-500/25 transition-all active:scale-95"
               >
                 {isSubmitting ? (
                   <>

@@ -107,15 +107,15 @@ export default function WeightCalculator() {
   };
 
   return (
-    <div className="w-full glass-panel rounded-2xl p-6 sm:p-8 border border-white/10 relative overflow-hidden">
+    <div className="w-full glass-panel rounded-2xl p-6 sm:p-8 border border-[#2A3241] relative overflow-hidden">
       {/* Background industrial circuit glow */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-80 h-80 bg-orange-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 mb-6 pb-6 border-b border-white/10">
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 mb-6 pb-6 border-b border-[#2A3241]">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[#E63946] uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#F97316] uppercase tracking-wider mb-1 font-bold">
             <Calculator className="h-4 w-4" />
             <span>Official Steels Vision Engineering Module</span>
           </div>
@@ -128,7 +128,7 @@ export default function WeightCalculator() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-white/10 text-xs font-mono text-slate-300">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0F131C] border border-[#2A3241] text-xs font-mono text-slate-300">
           <Scale className="h-4 w-4 text-cyan-400" />
           <span>ISO 9001:2015 Verified Formulae</span>
         </div>
@@ -151,10 +151,10 @@ export default function WeightCalculator() {
           <button
             key={tab.id}
             onClick={() => setCalcType(tab.id as CalculationInput["calculatorType"])}
-            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all ${
+            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all active:scale-95 ${
               calcType === tab.id
-                ? "bg-[#E63946] text-white shadow-lg shadow-red-500/20"
-                : "bg-slate-900/60 text-slate-300 hover:bg-slate-800 hover:text-white border border-white/5"
+                ? "bg-[#F97316] text-white shadow-lg shadow-orange-500/20 font-bold"
+                : "bg-[#0F131C] text-slate-300 hover:bg-[#12161F] hover:text-white border border-[#2A3241]"
             }`}
           >
             {tab.label}
@@ -381,7 +381,7 @@ export default function WeightCalculator() {
         </div>
 
         {/* Right: Real-Time Engineering Output Card */}
-        <div className="lg:col-span-5 flex flex-col justify-between p-6 rounded-2xl bg-slate-950/90 border border-white/10 relative shadow-2xl">
+        <div className="lg:col-span-5 flex flex-col justify-between p-6 rounded-2xl bg-[#0F131C]/95 border border-[#2A3241] relative shadow-2xl">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono uppercase text-slate-400 tracking-wider">
@@ -393,7 +393,7 @@ export default function WeightCalculator() {
             </div>
 
             {/* Main Calculated Weight */}
-            <div className="p-4 rounded-xl bg-slate-900/70 border border-white/5 space-y-2">
+            <div className="p-4 rounded-xl bg-[#080A0F]/85 border border-[#2A3241]/70 space-y-2">
               <div className="flex items-baseline justify-between">
                 <span className="text-xs text-slate-400 font-mono">Unit Weight Metric</span>
                 <div className="text-right">
@@ -403,11 +403,11 @@ export default function WeightCalculator() {
               </div>
 
               {calcType !== "pipe-welded-sheet-width" && (
-                <div className="flex items-baseline justify-between pt-2 border-t border-white/5">
+                <div className="flex items-baseline justify-between pt-2 border-t border-[#2A3241]/50">
                   <span className="text-xs text-slate-400 font-mono">Total Est. Weight ({quantity} pcs)</span>
                   <div className="text-right">
-                    <span className="text-3xl font-extrabold font-mono text-cyan-400">{result.totalWeight}</span>
-                    <span className="text-xs text-cyan-300 ml-1.5">KG</span>
+                    <span className="text-3xl font-extrabold font-mono text-amber-400">{result.totalWeight}</span>
+                    <span className="text-xs text-amber-300 ml-1.5">KG</span>
                     <div className="text-[11px] font-mono text-slate-500">
                       ≈ {(result.totalWeight / 1000).toFixed(3)} Metric Tons
                     </div>
@@ -417,11 +417,11 @@ export default function WeightCalculator() {
             </div>
 
             {/* Formula Breakdown */}
-            <div className="p-3.5 rounded-xl bg-slate-900/40 border border-white/5 space-y-1.5">
+            <div className="p-3.5 rounded-xl bg-[#080A0F]/85 border border-[#2A3241]/70 space-y-1.5">
               <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
                 Applied Formula:
               </span>
-              <p className="text-xs font-mono text-[#E63946] font-semibold bg-black/40 px-2.5 py-1.5 rounded-lg border border-red-500/20">
+              <p className="text-xs font-mono text-[#F97316] font-semibold bg-black/40 px-2.5 py-1.5 rounded-lg border border-orange-500/20">
                 {result.formulaDisplay}
               </p>
               <p className="text-[11px] text-slate-400">
@@ -431,13 +431,13 @@ export default function WeightCalculator() {
           </div>
 
           {/* Action CTAs */}
-          <div className="space-y-3 pt-6 border-t border-white/10 mt-6">
+          <div className="space-y-3 pt-6 border-t border-[#2A3241] mt-6">
             <button
               onClick={handleAddToRFQ}
-              className={`w-full py-3.5 px-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-lg ${
+              className={`w-full py-3.5 px-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95 ${
                 addedNotice
                   ? "bg-emerald-600 text-white shadow-emerald-500/25"
-                  : "bg-[#E63946] hover:bg-[#D62839] text-white shadow-red-500/25 hover:shadow-red-500/40"
+                  : "bg-[#F97316] hover:bg-orange-600 text-white shadow-orange-500/25 hover:shadow-orange-500/40"
               }`}
             >
               {addedNotice ? (
@@ -455,7 +455,7 @@ export default function WeightCalculator() {
 
             <button
               onClick={openRFQModal}
-              className="w-full py-2.5 px-4 rounded-xl font-medium text-xs text-slate-300 bg-slate-900 hover:bg-slate-850 hover:text-white border border-white/10 flex items-center justify-center gap-2 transition-all"
+              className="w-full py-2.5 px-4 rounded-xl font-medium text-xs text-slate-300 bg-[#080A0F] hover:bg-[#12161F] hover:text-white border border-[#2A3241] flex items-center justify-center gap-2 transition-all active:scale-95"
             >
               <span>View RFQ Basket & Request Final Commercial Quote</span>
               <ArrowRight className="h-3.5 w-3.5 text-cyan-400" />

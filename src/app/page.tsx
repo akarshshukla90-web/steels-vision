@@ -41,11 +41,11 @@ export default function HomePage() {
         {/* Left Column: Industrial Luxury Proposition */}
         <div className="w-full lg:w-1/2 space-y-6 text-left">
           {/* ISO Compliance Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-white/10 text-xs font-mono text-slate-300 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0F131C] border border-[#2A3241] text-xs font-mono text-slate-300 backdrop-blur-md">
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-white font-semibold">ISO 9001 / 14001 / 45001</span>
             <span className="text-slate-500">•</span>
-            <span className="text-cyan-400">25+ Yrs Metallurgy</span>
+            <span className="text-amber-400">25+ Yrs Metallurgy</span>
           </div>
 
           {/* Headline & Slogans from Official Brochure */}
@@ -54,7 +54,7 @@ export default function HomePage() {
               STRONG MATERIALS. <br />
               <span className="metallic-text">STRONGER PROJECTS.</span>
             </h1>
-            <p className="text-sm font-mono text-[#E63946] font-semibold tracking-wider uppercase">
+            <p className="text-sm font-mono text-[#F97316] font-semibold tracking-wider uppercase">
               Built For Performance, Delivered With Trust.
             </p>
           </div>
@@ -72,7 +72,7 @@ export default function HomePage() {
               { title: "Global Standards", subtitle: "ASTM / ASME / DIN" },
               { title: "Cost Efficiency", subtitle: "Direct Mill Tier-1" },
             ].map((p, i) => (
-              <div key={i} className="p-3 rounded-xl bg-slate-900/60 border border-white/5 space-y-0.5">
+              <div key={i} className="p-3 rounded-xl bg-[#0F131C] border border-[#2A3241] space-y-0.5">
                 <div className="text-xs font-bold text-white">{p.title}</div>
                 <div className="text-[10px] font-mono text-slate-400">{p.subtitle}</div>
               </div>
@@ -83,7 +83,7 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <button
               onClick={openRFQModal}
-              className="min-h-[48px] px-7 py-3.5 rounded-full bg-[#FF3B30] hover:bg-red-600 text-white font-bold text-xs sm:text-sm font-mono uppercase tracking-wider shadow-2xl shadow-red-500/30 hover:shadow-red-500/50 transition-all flex items-center gap-2.5 group active:scale-95"
+              className="min-h-[48px] px-7 py-3.5 rounded-full bg-[#F97316] hover:bg-orange-600 text-white font-bold text-xs sm:text-sm font-mono uppercase tracking-wider shadow-2xl shadow-orange-500/30 hover:shadow-orange-500/50 transition-all flex items-center gap-2.5 group active:scale-95"
             >
               <FileText className="h-4 w-4" />
               <span>Launch International RFQ Basket</span>
@@ -92,7 +92,7 @@ export default function HomePage() {
 
             <a
               href="#calculator-section"
-              className="min-h-[48px] px-6 py-3.5 rounded-full bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white border border-white/10 text-xs sm:text-sm font-mono flex items-center gap-2 transition-all backdrop-blur-xl"
+              className="min-h-[48px] px-6 py-3.5 rounded-full bg-[#0F131C] hover:bg-[#12161F] text-slate-200 hover:text-white border border-[#2A3241] text-xs sm:text-sm font-mono flex items-center gap-2 transition-all backdrop-blur-xl active:scale-95"
             >
               <Calculator className="h-4 w-4 text-cyan-400" />
               <span>Weight Calculator</span>
@@ -116,14 +116,14 @@ export default function HomePage() {
 
         {/* Right Column: 3D Interactive WebGL Metal Component Showcase */}
         <div className="w-full lg:w-1/2 relative">
-          <div className="relative w-full rounded-2xl p-1 bg-gradient-to-b from-white/10 via-transparent to-red-500/20 shadow-2xl">
+          <div className="relative w-full rounded-2xl p-1 bg-gradient-to-b from-[#2A3241] via-[#0F131C] to-orange-500/20 shadow-2xl">
             <MetalHeroScene />
           </div>
         </div>
       </section>
 
       {/* 2. INDUSTRIAL TELEMETRY STATS STRIP */}
-      <section className="w-full border-y border-white/10 bg-slate-950/70 py-8">
+      <section className="w-full border-y border-[#2A3241] bg-[#0F131C]/90 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div className="space-y-1">
             <div className="text-3xl sm:text-4xl font-black font-mono text-white">25+</div>
@@ -138,7 +138,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="space-y-1">
-            <div className="text-3xl sm:text-4xl font-black font-mono text-[#E63946]">15,000 PSI</div>
+            <div className="text-3xl sm:text-4xl font-black font-mono text-[#F97316]">15,000 PSI</div>
             <div className="text-xs uppercase font-mono tracking-wider text-slate-400">
               Hydrostatic Pressure Tested
             </div>
@@ -188,7 +188,7 @@ export default function HomePage() {
             {COMPANY_INFO.industriesServed.map((ind, i) => (
               <div
                 key={i}
-                className="p-4 rounded-2xl bg-slate-900/60 border border-white/5 hover:border-red-500/30 text-center transition-all group flex flex-col items-center justify-center min-h-[100px]"
+                className="p-4 rounded-2xl bg-[#0F131C] border border-[#2A3241] hover:border-orange-500/40 text-center transition-all group flex flex-col items-center justify-center min-h-[100px]"
               >
                 <div className="text-xs font-semibold text-slate-300 group-hover:text-white transition-colors">
                   {ind}
@@ -206,9 +206,9 @@ export default function HomePage() {
 
       {/* 8. HIGH-CONVERSION BOTTOM CALL TO ACTION */}
       <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden border border-red-500/30 bg-gradient-to-r from-red-950/40 via-slate-950 to-slate-900 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-2xl">
+        <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden border border-orange-500/30 bg-gradient-to-r from-orange-950/40 via-[#0F131C] to-[#080A0F] flex flex-col lg:flex-row items-center justify-between gap-8 shadow-2xl">
           <div className="space-y-3 text-left max-w-2xl">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#E63946] font-bold">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#F97316] font-bold">
               Fast-Track Export Procurement Desk
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white">
@@ -233,13 +233,13 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto shrink-0">
             <button
               onClick={openRFQModal}
-              className="px-8 py-4 rounded-xl bg-[#E63946] hover:bg-[#D62839] text-white font-bold text-sm shadow-xl shadow-red-500/30 transition-all text-center"
+              className="px-8 py-4 rounded-xl bg-[#F97316] hover:bg-orange-600 text-white font-bold text-sm shadow-xl shadow-orange-500/30 transition-all text-center active:scale-95"
             >
               Open B2B RFQ Basket
             </button>
             <a
               href={`mailto:${COMPANY_INFO.email}?subject=Project Enquiry for Steels Vision Export Desk`}
-              className="px-8 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-white/10 font-mono text-xs text-center transition-all"
+              className="px-8 py-3.5 rounded-xl bg-[#080A0F] hover:bg-[#12161F] text-slate-300 hover:text-white border border-[#2A3241] font-mono text-xs text-center transition-all active:scale-95"
             >
               Direct Email Inquiry
             </a>

@@ -42,7 +42,7 @@ export default function FloatingNav() {
     <header className="fixed top-3 sm:top-5 left-0 right-0 z-50 flex justify-center px-3 pointer-events-none">
       {/* Floating Dynamic Island Container */}
       <div
-        className={`pointer-events-auto transition-all duration-300 ease-out flex items-center justify-between border border-white/15 backdrop-blur-2xl bg-slate-950/85 shadow-2xl shadow-black/60 ${
+        className={`pointer-events-auto transition-all duration-300 ease-out flex items-center justify-between border border-[#2A3241] backdrop-blur-2xl bg-[#0F131C]/92 shadow-2xl shadow-black/80 ${
           isScrolled
             ? "w-full max-w-4xl py-2 px-4 rounded-full"
             : "w-full max-w-6xl py-2.5 px-5 rounded-2xl sm:rounded-full"
@@ -50,12 +50,12 @@ export default function FloatingNav() {
       >
         {/* Brand Pill */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#FF3B30] to-red-800 flex items-center justify-center text-white font-black font-mono text-sm shadow-lg shadow-red-500/25 group-hover:scale-105 transition-transform">
+          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#F97316] to-orange-800 flex items-center justify-center text-white font-black font-mono text-sm shadow-lg shadow-orange-500/25 group-hover:scale-105 transition-transform">
             SV
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-sm font-black tracking-tight text-white group-hover:text-cyan-400 transition-colors">
+              <span className="text-sm font-black tracking-tight text-white group-hover:text-amber-400 transition-colors">
                 STEELS VISION
               </span>
               <span className="hidden sm:inline text-[9px] font-mono px-1 py-0.2 rounded bg-white/10 text-slate-300">
@@ -72,19 +72,19 @@ export default function FloatingNav() {
 
         {/* Center Navigation Links */}
         <nav className="hidden md:flex items-center gap-5 text-[11px] font-mono uppercase tracking-wider text-slate-300">
-          <Link href="#hero-3d" className="hover:text-cyan-400 transition-colors">
+          <Link href="#hero-3d" className="hover:text-amber-400 transition-colors">
             3D Visualizer
           </Link>
-          <Link href="#catalog-section" className="hover:text-cyan-400 transition-colors">
+          <Link href="#catalog-section" className="hover:text-amber-400 transition-colors">
             Products
           </Link>
-          <Link href="#calculator-section" className="hover:text-cyan-400 transition-colors">
+          <Link href="#calculator-section" className="hover:text-amber-400 transition-colors">
             Calculator
           </Link>
-          <Link href="#compliance-section" className="hover:text-cyan-400 transition-colors">
+          <Link href="#compliance-section" className="hover:text-amber-400 transition-colors">
             Compliance
           </Link>
-          <Link href="#lead-capture-section" className="hover:text-cyan-400 transition-colors">
+          <Link href="#lead-capture-section" className="hover:text-amber-400 transition-colors">
             Lead Capture
           </Link>
         </nav>
@@ -95,10 +95,10 @@ export default function FloatingNav() {
           <button
             type="button"
             onClick={() => setIsCinemaOpen(true)}
-            className="min-h-[38px] px-3 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-red-500/30 text-white font-mono text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md hover:shadow-red-500/20 active:scale-95 group"
+            className="min-h-[38px] px-3 py-1.5 rounded-full bg-[#080A0F] hover:bg-[#12161F] border border-orange-500/30 text-white font-mono text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md hover:shadow-orange-500/20 active:scale-95 group"
             title="Watch Steels Vision 4K Industrial Film (Remotion Engine)"
           >
-            <Play className="h-3.5 w-3.5 text-red-500 fill-red-500 group-hover:scale-110 transition-transform" />
+            <Play className="h-3.5 w-3.5 text-amber-500 fill-amber-500 group-hover:scale-110 transition-transform" />
             <span className="hidden lg:inline text-[11px] uppercase tracking-wider">Brand Reel</span>
           </button>
 
@@ -106,7 +106,7 @@ export default function FloatingNav() {
           <button
             type="button"
             onClick={cycleAmbience}
-            className="hidden sm:flex min-h-[38px] px-2.5 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-white/10 text-slate-300 hover:text-white font-mono text-[10px] uppercase items-center gap-1.5 transition-all"
+            className="hidden sm:flex min-h-[38px] px-2.5 py-1.5 rounded-full bg-[#080A0F] hover:bg-[#12161F] border border-[#2A3241] text-slate-300 hover:text-white font-mono text-[10px] uppercase items-center gap-1.5 transition-all active:scale-95"
             title="Cycle Remotion Dynamic Background Style"
           >
             <Sparkles className="h-3 w-3 text-amber-400" />
@@ -116,7 +116,7 @@ export default function FloatingNav() {
           {/* High-Conversion RFQ Dynamic Island Button */}
           <button
             onClick={openRFQModal}
-            className="min-h-[38px] px-3.5 py-1.5 rounded-full bg-[#FF3B30] hover:bg-red-600 text-white font-bold text-xs font-mono uppercase tracking-wider shadow-lg shadow-red-500/25 transition-all flex items-center gap-1.5 active:scale-95"
+            className="min-h-[38px] px-3.5 py-1.5 rounded-full bg-[#F97316] hover:bg-orange-600 text-white font-bold text-xs font-mono uppercase tracking-wider shadow-lg shadow-orange-500/25 transition-all flex items-center gap-1.5 active:scale-95"
           >
             <FileText className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">RFQ</span>
@@ -130,7 +130,7 @@ export default function FloatingNav() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="md:hidden min-h-[38px] min-w-[38px] p-2 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-white/10 flex items-center justify-center"
+            className="md:hidden min-h-[38px] min-w-[38px] p-2 rounded-xl text-slate-300 hover:text-white bg-[#0F131C] border border-[#2A3241] flex items-center justify-center active:scale-95"
             aria-label="Toggle Navigation"
           >
             {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}

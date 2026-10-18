@@ -74,7 +74,7 @@ export default function MTCModal({ product, isOpen, onClose }: MTCModalProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-[#E63946] flex items-center justify-center text-white font-black text-sm">
+              <div className="h-10 w-10 rounded-xl bg-[#F97316] flex items-center justify-center text-white font-black text-sm shadow-md shadow-orange-500/20">
                 SV
               </div>
               <div>

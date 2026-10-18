@@ -88,7 +88,7 @@ export default function DirectLeadCapture() {
           particleCount: 70,
           spread: 60,
           origin: { y: 0.7 },
-          colors: ["#E63946", "#00D2FF", "#FFFFFF"],
+          colors: ["#F97316", "#38BDF8", "#FFFFFF"],
         });
       } catch (err) {
         // non-critical
@@ -121,7 +121,7 @@ export default function DirectLeadCapture() {
 
       {/* Header */}
       <div className="relative z-10 max-w-3xl mb-8 space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-[#E63946] text-xs font-mono uppercase tracking-wider font-semibold">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 border border-orange-500/30 text-[#F97316] text-xs font-mono uppercase tracking-wider font-bold">
           <Mail className="h-3.5 w-3.5" />
           <span>Direct Lead Routing to steelsvision@gmail.com</span>
         </div>
@@ -137,7 +137,7 @@ export default function DirectLeadCapture() {
 
       {/* Success Notification View */}
       {successData ? (
-        <div className="relative z-10 p-8 rounded-2xl bg-slate-900 border border-emerald-500/30 text-center space-y-4">
+        <div className="relative z-10 p-8 rounded-2xl bg-[#0F131C] border border-emerald-500/30 text-center space-y-4">
           <div className="inline-flex p-3 rounded-full bg-emerald-500/15 text-emerald-400">
             <CheckCircle2 className="h-10 w-10" />
           </div>
@@ -151,14 +151,14 @@ export default function DirectLeadCapture() {
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <a
               href={directMailtoUri}
-              className="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-mono text-xs flex items-center gap-2 border border-white/10 transition-colors"
+              className="px-5 py-3 rounded-xl bg-[#080A0F] hover:bg-[#12161F] text-white font-mono text-xs flex items-center gap-2 border border-[#2A3241] transition-colors active:scale-95"
             >
               <span>Open in Corporate Email Client (Outlook / Mail)</span>
               <ExternalLink className="h-3.5 w-3.5 text-cyan-400" />
             </a>
             <button
               onClick={() => setSuccessData(null)}
-              className="px-5 py-3 rounded-xl bg-[#E63946] text-white font-mono text-xs font-semibold hover:bg-red-700 transition-colors"
+              className="px-5 py-3 rounded-xl bg-[#F97316] text-white font-mono text-xs font-semibold hover:bg-orange-600 transition-colors active:scale-95"
             >
               Send Another Request
             </button>
@@ -186,7 +186,7 @@ export default function DirectLeadCapture() {
                 placeholder="e.g. Tariq Al-Mansoor"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full min-h-[46px] px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white font-mono text-xs focus:outline-none focus:border-red-500 transition-all placeholder:text-slate-500"
+                className="w-full min-h-[46px] px-4 py-2.5 bg-[#080A0F] border border-[#2A3241] rounded-xl text-white font-mono text-xs focus:outline-none focus:border-[#F97316] transition-all placeholder:text-slate-500"
               />
             </div>
 
@@ -202,7 +202,7 @@ export default function DirectLeadCapture() {
                 placeholder="buyer@petro-epc.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full min-h-[46px] px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white font-mono text-xs focus:outline-none focus:border-red-500 transition-all placeholder:text-slate-500"
+                className="w-full min-h-[46px] px-4 py-2.5 bg-[#080A0F] border border-[#2A3241] rounded-xl text-white font-mono text-xs focus:outline-none focus:border-[#F97316] transition-all placeholder:text-slate-500"
               />
             </div>
 
@@ -217,7 +217,7 @@ export default function DirectLeadCapture() {
                 placeholder="+971 50 123 4567"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full min-h-[46px] px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white font-mono text-xs focus:outline-none focus:border-red-500 transition-all placeholder:text-slate-500"
+                className="w-full min-h-[46px] px-4 py-2.5 bg-[#080A0F] border border-[#2A3241] rounded-xl text-white font-mono text-xs focus:outline-none focus:border-[#F97316] transition-all placeholder:text-slate-500"
               />
             </div>
 
@@ -232,7 +232,7 @@ export default function DirectLeadCapture() {
                 placeholder="e.g. Petrofac / McDermott"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                className="w-full min-h-[46px] px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white font-mono text-xs focus:outline-none focus:border-red-500 transition-all placeholder:text-slate-500"
+                className="w-full min-h-[46px] px-4 py-2.5 bg-[#080A0F] border border-[#2A3241] rounded-xl text-white font-mono text-xs focus:outline-none focus:border-[#F97316] transition-all placeholder:text-slate-500"
               />
             </div>
           </div>
@@ -247,7 +247,7 @@ export default function DirectLeadCapture() {
               <select
                 value={productInterest}
                 onChange={(e) => setProductInterest(e.target.value)}
-                className="w-full min-h-[46px] px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white font-mono text-xs focus:border-red-500 cursor-pointer"
+                className="w-full min-h-[46px] px-4 py-2.5 bg-[#080A0F] border border-[#2A3241] rounded-xl text-white font-mono text-xs focus:border-[#F97316] cursor-pointer"
               >
                 <option value="Pipes & Tubes (Seamless / Welded)">Pipes &amp; Tubes (ASTM A312 / A106 / A335)</option>
                 <option value="Forged Flanges (150# to 2500# & API)">Forged Flanges (ASME B16.5 / B16.47)</option>
@@ -270,7 +270,7 @@ export default function DirectLeadCapture() {
               <select
                 value={destinationPort}
                 onChange={(e) => setDestinationPort(e.target.value)}
-                className="w-full min-h-[46px] px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white font-mono text-xs focus:border-red-500 cursor-pointer"
+                className="w-full min-h-[46px] px-4 py-2.5 bg-[#080A0F] border border-[#2A3241] rounded-xl text-white font-mono text-xs focus:border-[#F97316] cursor-pointer"
               >
                 {COMPANY_INFO.exportPorts
                   .filter((p) => p.type === "Destination")
@@ -298,12 +298,12 @@ export default function DirectLeadCapture() {
               placeholder="e.g. 500 Meters Seamless Pipe ASTM A312 TP 316L, 4-inch Sch 40 with 3.1 MTC witnessed by Lloyd's. Required for delivery at Jebel Ali Port within 30 days."
               value={requirements}
               onChange={(e) => setRequirements(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white font-mono text-xs focus:outline-none focus:border-red-500 transition-all placeholder:text-slate-500 leading-relaxed"
+              className="w-full px-4 py-3 bg-[#080A0F] border border-[#2A3241] rounded-xl text-white font-mono text-xs focus:outline-none focus:border-[#F97316] transition-all placeholder:text-slate-500 leading-relaxed"
             />
           </div>
 
           {/* Action Row */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-3 border-t border-white/10">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-3 border-t border-[#2A3241]">
             <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
               <span className="flex items-center gap-1.5 text-emerald-400 font-semibold">
                 <ShieldCheck className="h-4 w-4" />
@@ -319,7 +319,7 @@ export default function DirectLeadCapture() {
             <div className="flex flex-wrap items-center gap-3">
               <a
                 href={directMailtoUri}
-                className="min-h-[48px] px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-white/10 font-mono text-xs flex items-center justify-center gap-1.5 transition-colors"
+                className="min-h-[48px] px-4 py-2.5 rounded-xl bg-[#080A0F] hover:bg-[#12161F] text-slate-300 hover:text-white border border-[#2A3241] font-mono text-xs flex items-center justify-center gap-1.5 transition-colors active:scale-95"
                 title="Send via your local Outlook or Email App"
               >
                 <span>Direct Mailto</span>
@@ -329,7 +329,7 @@ export default function DirectLeadCapture() {
               <button
                 type="submit"
                 disabled={loading}
-                className="min-h-[48px] px-7 py-3 rounded-xl bg-[#E63946] hover:bg-[#D62839] text-white font-bold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-red-500/25 transition-all disabled:opacity-50"
+                className="min-h-[48px] px-7 py-3 rounded-xl bg-[#F97316] hover:bg-orange-600 text-white font-bold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-orange-500/25 transition-all disabled:opacity-50 active:scale-95"
               >
                 {loading ? (
                   <>

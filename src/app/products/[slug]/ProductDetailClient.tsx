@@ -26,6 +26,7 @@ import {
   Mail,
   Scale,
 } from "lucide-react";
+import EngineeringSpecsTable from "@/components/catalog/EngineeringSpecsTable";
 
 interface ProductDetailClientProps {
   product: ProductItem;
@@ -259,8 +260,14 @@ export default function ProductDetailClient({
         </div>
       </div>
 
+      {/* 2.5 ENGINEERING-GRADE DIMENSIONAL SPECIFICATION GRID */}
+      <EngineeringSpecsTable
+        product={product}
+        onSelectDimension={(dim) => setCustomDimension(dim)}
+      />
+
       {/* 3. DEEP TECHNICAL SPECIFICATION & COMPLIANCE BENTO GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
         {/* Bento 1: Standards & Dimensions */}
         <div className="volumetric-rim-card p-6 rounded-3xl space-y-4 shadow-2xl">
           <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 uppercase font-bold">
@@ -372,10 +379,10 @@ export default function ProductDetailClient({
 
       {/* 5. FLOATING STICKY ACTION DOCK (APPLE-GRADE PROCUREMENT BAR) */}
       <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 z-40 max-w-xl pointer-events-none">
-        <div className="pointer-events-auto flex items-center justify-between gap-3 p-3 rounded-2xl border border-white/15 bg-[#030508]/92 backdrop-blur-2xl shadow-2xl shadow-black/80">
+        <div className="pointer-events-auto flex items-center justify-between gap-3 p-3 rounded-2xl border border-[#2A3241] bg-[#0F131C]/95 backdrop-blur-2xl shadow-2xl shadow-black/80">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-9 h-9 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center shrink-0">
-              <Layers className="w-4 h-4 text-red-400" />
+            <div className="w-9 h-9 rounded-xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center shrink-0">
+              <Layers className="w-4 h-4 text-amber-400" />
             </div>
             <div className="min-w-0">
               <div className="text-xs font-bold text-white truncate">{product.name}</div>
@@ -389,7 +396,7 @@ export default function ProductDetailClient({
             <button
               type="button"
               onClick={() => setIsMtcOpen(true)}
-              className="min-h-[38px] px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/10 text-slate-200 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-colors"
+              className="min-h-[38px] px-3 py-1.5 rounded-xl bg-[#080A0F] hover:bg-[#12161F] border border-[#2A3241] text-slate-200 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-colors active:scale-95"
               title="Inspect EN 10204 3.1 MTC"
             >
               <FileCheck2 className="w-3.5 h-3.5 text-emerald-400" />
@@ -402,7 +409,7 @@ export default function ProductDetailClient({
               className={`min-h-[38px] px-4 py-1.5 rounded-xl font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-lg active:scale-95 ${
                 addedNotice
                   ? "bg-emerald-600 text-white shadow-emerald-500/30"
-                  : "bg-[#EF4444] hover:bg-red-600 text-white shadow-red-500/25"
+                  : "bg-[#F97316] hover:bg-orange-600 text-white shadow-orange-500/25"
               }`}
             >
               {addedNotice ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Link from "next/link";
 import { PRODUCTS } from "@/content/products";
 import { ProductItem, MetalCategory } from "@/types";
 import { useRFQBasket } from "@/hooks/useRFQBasket";
@@ -16,6 +17,7 @@ import {
   ArrowUpDown,
   ShieldCheck,
   ArrowUpRight,
+  ArrowRight,
   Filter,
 } from "lucide-react";
 
@@ -348,15 +350,15 @@ export default function ProductCatalog() {
                   </div>
                 </div>
 
-                {/* Action Buttons: Add to RFQ + MTC Certificate Preview Toggle */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-5 border-t border-white/10 mt-5">
+                {/* Action Buttons: Add to RFQ + MTC Certificate Preview Toggle + View Dedicated 3D Page */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-5 border-t border-white/10 mt-5">
                   <button
                     type="button"
                     onClick={() => handleAddProduct(product)}
                     className={`min-h-[46px] flex-1 py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all ${
                       isAdded
                         ? "bg-emerald-600 text-white shadow-md shadow-emerald-500/30"
-                        : "bg-[#E63946] hover:bg-[#D62839] text-white shadow-md shadow-red-500/20"
+                        : "bg-[#FF3B30] hover:bg-red-600 text-white shadow-md shadow-red-500/20 active:scale-95"
                     }`}
                   >
                     {isAdded ? (
@@ -367,7 +369,7 @@ export default function ProductCatalog() {
                     ) : (
                       <>
                         <Plus className="h-4 w-4" />
-                        <span>Add to RFQ Basket</span>
+                        <span>Add to RFQ</span>
                       </>
                     )}
                   </button>
@@ -376,12 +378,22 @@ export default function ProductCatalog() {
                   <button
                     type="button"
                     onClick={() => setSelectedMtcProduct(product)}
-                    className="min-h-[46px] px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white border border-white/10 text-xs font-mono flex items-center justify-center gap-1.5 transition-all"
+                    className="min-h-[46px] px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white border border-white/10 text-xs font-mono flex items-center justify-center gap-1.5 transition-all"
                     title="Inspect certified EN 10204 3.1 & 3.2 Mill Test Certificate"
                   >
                     <FileCheck2 className="h-4 w-4 text-emerald-400" />
-                    <span>Sample MTC 3.1</span>
+                    <span>MTC 3.1</span>
                   </button>
+
+                  {/* DEDICATED INDIVIDUAL PRODUCT & 3D PAGE LINK */}
+                  <Link
+                    href={`/products/${product.id}`}
+                    className="min-h-[46px] px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-cyan-300 hover:text-white border border-white/10 text-xs font-mono flex items-center justify-center gap-1.5 transition-all group"
+                    title="View dedicated product specifications & 3D model"
+                  >
+                    <span>3D Specs</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-cyan-400 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </div>
             );

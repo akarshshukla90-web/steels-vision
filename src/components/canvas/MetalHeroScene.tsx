@@ -11,33 +11,43 @@ import {
   Layers,
   Sparkles,
   ZoomIn,
+  Boxes,
+  Split,
   Eye,
-  Info,
 } from "lucide-react";
 
-export type Product3DModel = 
-  | "pipes" 
-  | "tubes" 
-  | "coils" 
-  | "sheets" 
-  | "plates" 
-  | "bars" 
-  | "flanges" 
+export type Product3DModel =
+  | "pipes"
+  | "tubes"
+  | "coils"
+  | "sheets"
+  | "plates"
+  | "bars"
+  | "flanges"
   | "fittings";
 
-export type MaterialFinish = 
-  | "ss316-mirror" 
-  | "inconel625" 
-  | "titanium-satin" 
-  | "forged-glow" 
+export type MaterialFinish =
+  | "ss316-mirror"
+  | "inconel625"
+  | "titanium-satin"
+  | "forged-glow"
   | "carbon-matte";
 
-export default function MetalHeroScene() {
+interface MetalHeroSceneProps {
+  initialModel?: Product3DModel;
+  compactControls?: boolean;
+}
+
+export default function MetalHeroScene({
+  initialModel = "pipes",
+  compactControls = false,
+}: MetalHeroSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeModel, setActiveModel] = useState<Product3DModel>("pipes");
+  const [activeModel, setActiveModel] = useState<Product3DModel>(initialModel);
   const [activeFinish, setActiveFinish] = useState<MaterialFinish>("ss316-mirror");
   const [fpsDisplay, setFpsDisplay] = useState(60);
   const [isInteracting, setIsInteracting] = useState(false);
+  const [isExploded, setIsExploded] = useState(false);
 
   // Scene references
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -47,6 +57,15 @@ export default function MetalHeroScene() {
 
   const elementsGroupRef = useRef<THREE.Group | null>(null);
   const modelMeshesRef = useRef<Record<string, THREE.Group | THREE.Mesh>>({});
+
+  // Explode animation references (target and current positions)
+  const animPartsRef = useRef<
+    Array<{
+      mesh: THREE.Object3D;
+      assembledPos: THREE.Vector3;
+      explodedPos: THREE.Vector3;
+    }>
+  >([]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -63,7 +82,7 @@ export default function MetalHeroScene() {
     camera.position.set(2.4, 1.5, 4.6);
     cameraRef.current = camera;
 
-    // 2. WebGL Renderer with Apple-grade Tone Mapping & Color Grading
+    // 2. High-Performance PBR WebGL Renderer
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
@@ -77,7 +96,7 @@ export default function MetalHeroScene() {
 
     container.appendChild(renderer.domElement);
 
-    // 3. Official Three.js OrbitControls (True 360° Inspection)
+    // 3. Official Three.js OrbitControls (Full 360° CAD Freedom)
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.055;
@@ -94,23 +113,24 @@ export default function MetalHeroScene() {
     controls.addEventListener("start", () => setIsInteracting(true));
     controls.addEventListener("end", () => setIsInteracting(false));
 
-    // 4. Procedural Brushed Metal Normal Map
+    // 4. Ultra-Realistic Anisotropic Brushed Metal Normal Map (1024x1024 with Lathe Striations)
     function createBrushedMetalNormalMap() {
       const canvas = document.createElement("canvas");
-      canvas.width = 512;
-      canvas.height = 512;
+      canvas.width = 1024;
+      canvas.height = 1024;
       const ctx = canvas.getContext("2d");
       if (!ctx) return null;
 
-      ctx.fillStyle = "rgb(128, 128, 255)";
-      ctx.fillRect(0, 0, 512, 512);
+      ctx.fillStyle = "rgb(128, 128, 255)"; // Neutral PBR normal
+      ctx.fillRect(0, 0, 1024, 1024);
 
-      for (let i = 0; i < 2000; i++) {
-        const x = Math.random() * 512;
-        const y = Math.random() * 512;
-        const len = Math.random() * 180 + 40;
-        const noise = (Math.random() - 0.5) * 28;
-        ctx.fillStyle = `rgb(${128 + noise}, ${128 + noise * 0.4}, 255)`;
+      // Lathe circular and axial striations
+      for (let i = 0; i < 3000; i++) {
+        const x = Math.random() * 1024;
+        const y = Math.random() * 1024;
+        const len = Math.random() * 220 + 60;
+        const noise = (Math.random() - 0.5) * 32;
+        ctx.fillStyle = `rgb(${128 + noise}, ${128 + noise * 0.3}, 255)`;
         ctx.fillRect(x, y, len, 1.2);
       }
 
@@ -121,7 +141,33 @@ export default function MetalHeroScene() {
       return texture;
     }
 
-    // 5. Procedural Studio Reflection Cube Map
+    // 5. Procedural Roughness Variation Map (Simulates micro-grain satin sheen)
+    function createRoughnessMap() {
+      const canvas = document.createElement("canvas");
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return null;
+
+      ctx.fillStyle = "#333333";
+      ctx.fillRect(0, 0, 512, 512);
+
+      for (let i = 0; i < 1500; i++) {
+        const x = Math.random() * 512;
+        const y = Math.random() * 512;
+        const val = Math.floor(Math.random() * 50 + 35);
+        ctx.fillStyle = `rgb(${val}, ${val}, ${val})`;
+        ctx.fillRect(x, y, Math.random() * 80 + 20, 1.5);
+      }
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(4, 4);
+      return texture;
+    }
+
+    // 6. HDR Industrial Studio Environment Map
     function createProceduralStudioEnvironment() {
       const sides = ["px", "nx", "py", "ny", "pz", "nz"];
       const canvasList: HTMLCanvasElement[] = [];
@@ -141,7 +187,7 @@ export default function MetalHeroScene() {
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, 256, 256);
 
-          // Top overhead light banks
+          // Overhead luminaire banks
           ctx.fillStyle = "#ffffff";
           ctx.fillRect(30, 30, 196, 50);
         } else if (side === "ny") {
@@ -156,7 +202,8 @@ export default function MetalHeroScene() {
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, 256, 256);
 
-          ctx.fillStyle = "rgba(0, 210, 255, 0.2)";
+          // Specular rim light bars
+          ctx.fillStyle = "rgba(0, 210, 255, 0.22)";
           ctx.fillRect(15, 0, 40, 256);
         }
         canvasList.push(c);
@@ -168,26 +215,27 @@ export default function MetalHeroScene() {
     }
 
     const normalMap = createBrushedMetalNormalMap();
+    const roughnessMap = createRoughnessMap();
     const envMap = createProceduralStudioEnvironment();
     scene.environment = envMap;
 
-    // 6. Studio Lighting Rig
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    // 7. Studio Key, Rim, and Fill Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 3.0);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
     keyLight.position.set(5, 6, 4);
     scene.add(keyLight);
 
-    const rimCyan = new THREE.DirectionalLight(0x00d2ff, 2.2);
+    const rimCyan = new THREE.DirectionalLight(0x00d2ff, 2.4);
     rimCyan.position.set(-5, 2, -4);
     scene.add(rimCyan);
 
-    const rimRed = new THREE.DirectionalLight(0xff3b30, 1.8);
+    const rimRed = new THREE.DirectionalLight(0xff3b30, 1.9);
     rimRed.position.set(4, -4, 3);
     scene.add(rimRed);
 
-    // 7. CINEMATIC LUXURY BACKGROUND (Floating Holographic Measurement Coordinate Rings & Bokeh)
+    // 8. Luxury Holographic Background Geometry
     const bgGroup = new THREE.Group();
     scene.add(bgGroup);
 
@@ -233,7 +281,7 @@ export default function MetalHeroScene() {
     const particles = new THREE.Points(particleGeo, particleMat);
     bgGroup.add(particles);
 
-    // 8. 3D MODELS GROUP (ALL 8 CORE PRODUCTS)
+    // 9. PROCEDURAL 3D MODELS (ALL 8 CORE PRODUCTS + EXPLODED VIEW SUPPORT)
     const elementsGroup = new THREE.Group();
     elementsGroupRef.current = elementsGroup;
     scene.add(elementsGroup);
@@ -244,9 +292,15 @@ export default function MetalHeroScene() {
       roughness: 0.12,
       envMap: envMap,
       normalMap: normalMap || undefined,
+      roughnessMap: roughnessMap || undefined,
     });
 
     const meshes: Record<string, THREE.Group | THREE.Mesh> = {};
+    const animParts: Array<{
+      mesh: THREE.Object3D;
+      assembledPos: THREE.Vector3;
+      explodedPos: THREE.Vector3;
+    }> = [];
 
     // -------------------------------------------------------------
     // Model 1: PIPES (Industrial Heavy-Wall Seamless Pipe ASTM A312)
@@ -281,6 +335,12 @@ export default function MetalHeroScene() {
     meshes["pipes"] = pipeGroup;
     elementsGroup.add(pipeGroup);
 
+    // Explode definition for Pipe: Bevel rings slide out
+    animParts.push(
+      { mesh: pipeTop, assembledPos: new THREE.Vector3(0, 1.4, 0), explodedPos: new THREE.Vector3(0, 2.1, 0) },
+      { mesh: pipeBottom, assembledPos: new THREE.Vector3(0, -1.4, 0), explodedPos: new THREE.Vector3(0, -2.1, 0) }
+    );
+
     // -------------------------------------------------------------
     // Model 2: TUBES (Thin-Wall High-Precision Instrumentation Tube)
     // -------------------------------------------------------------
@@ -313,7 +373,6 @@ export default function MetalHeroScene() {
     // Model 3: COILS (Massive Rolled Steel Slit Master Coil)
     // -------------------------------------------------------------
     const coilGroup = new THREE.Group();
-    // Coil outer ring extrusion
     const coilShape = new THREE.Shape();
     coilShape.absarc(0, 0, 1.4, 0, Math.PI * 2, false);
     const coilHole = new THREE.Path();
@@ -330,7 +389,6 @@ export default function MetalHeroScene() {
     const coilMesh = new THREE.Mesh(coilGeo, baseMetalMat);
     coilMesh.position.z = -0.55;
 
-    // High-tensile steel strapping bands
     const strapGeo = new THREE.TorusGeometry(1.41, 0.02, 16, 64);
     const strapMat = new THREE.MeshStandardMaterial({ color: 0x111827, metalness: 0.8, roughness: 0.3 });
     const strap1 = new THREE.Mesh(strapGeo, strapMat);
@@ -345,6 +403,12 @@ export default function MetalHeroScene() {
     meshes["coils"] = coilGroup;
     elementsGroup.add(coilGroup);
 
+    // Explode definition for Coil: Straps slide apart
+    animParts.push(
+      { mesh: strap1, assembledPos: new THREE.Vector3(0, 0, -0.28), explodedPos: new THREE.Vector3(0, 0, -0.85) },
+      { mesh: strap2, assembledPos: new THREE.Vector3(0, 0, 0.28), explodedPos: new THREE.Vector3(0, 0, 0.85) }
+    );
+
     // -------------------------------------------------------------
     // Model 4: SHEETS (Stack of Mirror-Polished Stainless Sheets)
     // -------------------------------------------------------------
@@ -354,8 +418,13 @@ export default function MetalHeroScene() {
       const sGeo = new THREE.BoxGeometry(2.3, 0.04, 1.6);
       const sMesh = new THREE.Mesh(sGeo, baseMetalMat);
       sMesh.position.y = (i - 2) * 0.12;
-      sMesh.rotation.y = (i - 2) * 0.02; // Slight stack stagger
       sheetGroup.add(sMesh);
+
+      animParts.push({
+        mesh: sMesh,
+        assembledPos: new THREE.Vector3(0, (i - 2) * 0.12, 0),
+        explodedPos: new THREE.Vector3(0, (i - 2) * 0.45, 0),
+      });
     }
     sheetGroup.rotation.x = Math.PI / 5;
     sheetGroup.rotation.y = -Math.PI / 6;
@@ -424,14 +493,26 @@ export default function MetalHeroScene() {
     neckMesh.rotation.x = Math.PI / 2;
     neckMesh.position.z = 0.45;
 
-    flangeGroup.add(flangeMesh, neckMesh);
+    // Gasket disc ring
+    const gasketGeo = new THREE.RingGeometry(0.72, 1.15, 64);
+    const gasketMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.5, roughness: 0.6 });
+    const gasketMesh = new THREE.Mesh(gasketGeo, gasketMat);
+    gasketMesh.position.z = -0.13;
+
+    flangeGroup.add(flangeMesh, neckMesh, gasketMesh);
     flangeGroup.rotation.x = Math.PI / 4;
     flangeGroup.visible = false;
     meshes["flanges"] = flangeGroup;
     elementsGroup.add(flangeGroup);
 
+    // Explode definition for Flange: Weld Neck separates from Gasket & Flange face
+    animParts.push(
+      { mesh: neckMesh, assembledPos: new THREE.Vector3(0, 0, 0.45), explodedPos: new THREE.Vector3(0, 0, 1.2) },
+      { mesh: gasketMesh, assembledPos: new THREE.Vector3(0, 0, -0.13), explodedPos: new THREE.Vector3(0, 0, -0.8) }
+    );
+
     // -------------------------------------------------------------
-    // Model 8: FITTINGS (Precision Double-Ferrule Tube Fitting)
+    // Model 8: FITTINGS (Precision Double-Ferrule Tube Fitting Assembly)
     // -------------------------------------------------------------
     const fittingGroup = new THREE.Group();
     const hexRadius = 0.72;
@@ -453,22 +534,69 @@ export default function MetalHeroScene() {
       bevelThickness: 0.04,
       bevelSize: 0.03,
     });
+    // Main Body
     const hexMesh = new THREE.Mesh(hexGeo, baseMetalMat);
     hexMesh.position.z = -0.45;
 
-    const stemGeo = new THREE.CylinderGeometry(0.44, 0.44, 1.9, 48);
+    // Front Ferrule (Cone)
+    const frontFerruleGeo = new THREE.CylinderGeometry(0.38, 0.44, 0.25, 48);
+    const ferruleMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.95, roughness: 0.2 });
+    const frontFerrule = new THREE.Mesh(frontFerruleGeo, ferruleMat);
+    frontFerrule.rotation.x = Math.PI / 2;
+    frontFerrule.position.z = 0.58;
+
+    // Back Ferrule (Precision Ring)
+    const backFerruleGeo = new THREE.CylinderGeometry(0.42, 0.44, 0.18, 48);
+    const backFerrule = new THREE.Mesh(backFerruleGeo, ferruleMat);
+    backFerrule.rotation.x = Math.PI / 2;
+    backFerrule.position.z = 0.85;
+
+    // Outer Compression Nut
+    const nutShape = new THREE.Shape();
+    for (let i = 0; i < 6; i++) {
+      const a = (i / 6) * Math.PI * 2;
+      const x = Math.cos(a) * 0.74;
+      const y = Math.sin(a) * 0.74;
+      if (i === 0) nutShape.moveTo(x, y);
+      else nutShape.lineTo(x, y);
+    }
+    const nutHole = new THREE.Path();
+    nutHole.absarc(0, 0, 0.44, 0, Math.PI * 2, true);
+    nutShape.holes.push(nutHole);
+
+    const nutGeo = new THREE.ExtrudeGeometry(nutShape, {
+      depth: 0.65,
+      bevelEnabled: true,
+      bevelThickness: 0.03,
+      bevelSize: 0.02,
+    });
+    const nutMesh = new THREE.Mesh(nutGeo, baseMetalMat);
+    nutMesh.position.z = 0.95;
+
+    // Insert Instrumentation Tube
+    const stemGeo = new THREE.CylinderGeometry(0.42, 0.42, 2.2, 48);
     const stemMesh = new THREE.Mesh(stemGeo, baseMetalMat);
     stemMesh.rotation.x = Math.PI / 2;
+    stemMesh.position.z = -0.3;
 
-    fittingGroup.add(hexMesh, stemMesh);
+    fittingGroup.add(hexMesh, frontFerrule, backFerrule, nutMesh, stemMesh);
     fittingGroup.rotation.x = Math.PI / 4;
     fittingGroup.visible = false;
     meshes["fittings"] = fittingGroup;
     elementsGroup.add(fittingGroup);
 
-    modelMeshesRef.current = meshes;
+    // Explode definition for Fitting: Multi-part disassembly
+    animParts.push(
+      { mesh: frontFerrule, assembledPos: new THREE.Vector3(0, 0, 0.58), explodedPos: new THREE.Vector3(0, 0, 1.25) },
+      { mesh: backFerrule, assembledPos: new THREE.Vector3(0, 0, 0.85), explodedPos: new THREE.Vector3(0, 0, 1.75) },
+      { mesh: nutMesh, assembledPos: new THREE.Vector3(0, 0, 0.95), explodedPos: new THREE.Vector3(0, 0, 2.35) },
+      { mesh: stemMesh, assembledPos: new THREE.Vector3(0, 0, -0.3), explodedPos: new THREE.Vector3(0, 0, -1.35) }
+    );
 
-    // 9. Resize Listener
+    modelMeshesRef.current = meshes;
+    animPartsRef.current = animParts;
+
+    // 10. Resize Listener
     const handleResize = () => {
       if (!container || !rendererRef.current || !cameraRef.current) return;
       const w = container.clientWidth;
@@ -480,7 +608,7 @@ export default function MetalHeroScene() {
 
     window.addEventListener("resize", handleResize);
 
-    // 10. 60 FPS Render Loop with Smooth Orbit Inertia
+    // 11. 60 FPS Render Loop with Smooth Explosion Lerp
     let frameId: number;
     let lastTime = performance.now();
     let frameCount = 0;
@@ -497,7 +625,13 @@ export default function MetalHeroScene() {
 
       controls.update();
 
-      // Atmospheric rotation of holographic background rings
+      // Smooth Lerp for Exploded / Assembled View
+      animPartsRef.current.forEach((part) => {
+        const target = isExploded ? part.explodedPos : part.assembledPos;
+        part.mesh.position.lerp(target, 0.08);
+      });
+
+      // Background rings
       ring1.rotation.z += 0.0015;
       ring2.rotation.z -= 0.002;
 
@@ -522,7 +656,7 @@ export default function MetalHeroScene() {
       }
       renderer.dispose();
     };
-  }, []);
+  }, [isExploded]);
 
   // Update Materials when Finish Changes
   useEffect(() => {
@@ -537,21 +671,21 @@ export default function MetalHeroScene() {
       targetMetalness = 0.99;
       targetRoughness = 0.06; // Ultra mirror polish
     } else if (activeFinish === "inconel625") {
-      targetColor = 0xc4a679; // Rich high-nickel warm bronze
+      targetColor = 0xc4a679; // High-nickel champagne gold sheen
       targetMetalness = 0.94;
       targetRoughness = 0.22;
     } else if (activeFinish === "titanium-satin") {
-      targetColor = 0x8fa3b2; // Aerospace titanium satin sheen
+      targetColor = 0x8fa3b2; // Satin titanium blue-gray
       targetMetalness = 0.88;
       targetRoughness = 0.28;
     } else if (activeFinish === "forged-glow") {
-      targetColor = 0xff3b00; // Thermal heat treated glow
+      targetColor = 0xff3b00; // Thermal glow
       targetMetalness = 0.82;
       targetRoughness = 0.25;
       emissiveColor = 0xff4000;
       emissiveIntensity = 0.95;
     } else if (activeFinish === "carbon-matte") {
-      targetColor = 0x5a6578; // Normalized industrial carbon steel
+      targetColor = 0x5a6578; // Normalized carbon steel
       targetMetalness = 0.85;
       targetRoughness = 0.45;
     }
@@ -587,32 +721,27 @@ export default function MetalHeroScene() {
     controlsRef.current.update();
   };
 
-  const productTabs: { id: Product3DModel; label: string; badge: string }[] = [
-    { id: "pipes", label: "Pipes", badge: "ASTM A312" },
-    { id: "tubes", label: "Tubes", badge: "ASTM A269" },
-    { id: "coils", label: "Coils", badge: "HR & CR Coils" },
-    { id: "sheets", label: "Sheets", badge: "ASTM A240" },
-    { id: "plates", label: "Plates", badge: "Boiler Steel" },
-    { id: "bars", label: "Round Bars", badge: "Centerless Ground" },
-    { id: "flanges", label: "Flanges", badge: "ASME B16.5" },
-    { id: "fittings", label: "Fittings", badge: "Twin Ferrule" },
+  const productTabs: { id: Product3DModel; label: string }[] = [
+    { id: "pipes", label: "Pipes" },
+    { id: "tubes", label: "Tubes" },
+    { id: "coils", label: "Coils" },
+    { id: "sheets", label: "Sheets" },
+    { id: "plates", label: "Plates" },
+    { id: "bars", label: "Round Bars" },
+    { id: "flanges", label: "Flanges" },
+    { id: "fittings", label: "Fittings" },
   ];
 
   return (
-    <div className="relative w-full h-full min-h-[600px] lg:min-h-[700px] flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#05070B] shadow-2xl">
-      {/* 1. CINEMATIC ATMOSPHERIC BACKGROUND LAYERS */}
+    <div className="relative w-full h-full min-h-[580px] lg:min-h-[660px] flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#05070B] shadow-2xl">
+      {/* 1. CINEMATIC ATMOSPHERIC BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Soft volumetric ambient glows */}
         <div className="absolute top-1/4 left-1/4 w-[420px] h-[420px] bg-red-600/10 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-[420px] h-[420px] bg-cyan-500/10 rounded-full blur-[120px] animate-pulse" />
-
-        {/* CAD Blueprint grid & target circles */}
         <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:48px_48px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full border border-cyan-500/10" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] rounded-full border border-red-500/10" />
       </div>
 
-      {/* 2. Interactive WebGL Canvas with Grab Cursor */}
+      {/* 2. Full 360° Interactive WebGL Canvas */}
       <div
         ref={containerRef}
         className={`absolute inset-0 z-0 touch-none ${
@@ -628,12 +757,23 @@ export default function MetalHeroScene() {
           <span className="text-slate-600">|</span>
           <span className="text-cyan-400">{fpsDisplay} FPS</span>
           <span className="text-slate-600">|</span>
-          <span className="text-slate-400">APPLE-TIER INERTIAL CAD</span>
+          <span className="text-slate-400">PBR ANISOTROPIC</span>
         </div>
 
-        <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-950/80 border border-white/10 backdrop-blur-xl text-[11px] font-mono text-slate-300 pointer-events-auto shadow-lg">
-          <ZoomIn className="h-3 w-3 text-cyan-400" />
-          <span>Scroll to Zoom &bull; Drag for 360&deg; Orbit</span>
+        {/* EXPLODE VIEW / ASSEMBLY BREAKDOWN TOGGLE */}
+        <div className="flex items-center gap-2 pointer-events-auto">
+          <button
+            type="button"
+            onClick={() => setIsExploded((prev) => !prev)}
+            className={`min-h-[36px] px-3.5 py-1.5 rounded-full text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-xl ${
+              isExploded
+                ? "bg-[#FF3B30] text-white shadow-red-500/30 border border-red-400"
+                : "bg-slate-950/80 hover:bg-slate-900 text-slate-200 border border-white/15"
+            }`}
+          >
+            <Split className="h-3.5 w-3.5" />
+            <span>{isExploded ? "Exploded CAD View: Active" : "Explode Assembly (X-Ray)"}</span>
+          </button>
         </div>
       </div>
 
@@ -641,47 +781,49 @@ export default function MetalHeroScene() {
       <div className="relative z-10 mx-auto pointer-events-none px-4">
         <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950/75 border border-cyan-500/25 text-xs font-mono text-slate-200 backdrop-blur-xl shadow-2xl">
           <Move className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
-          <span>Full 360&deg; CAD Inspection &bull; Select Any Industrial Product Below</span>
+          <span>Full 360&deg; Orbit &bull; Click &amp; Drag Anywhere on Canvas</span>
         </div>
       </div>
 
-      {/* 5. FROSTED GLASS DYNAMIC COCKPIT CONTROLS (Zero overlap, fully responsive) */}
+      {/* 5. FROSTED GLASS DYNAMIC COCKPIT CONTROLS */}
       <div className="relative z-10 w-full p-3 sm:p-4 pointer-events-auto">
         <div className="w-full glass-panel bg-slate-950/90 border border-white/15 rounded-2xl p-3 sm:p-4 shadow-2xl flex flex-col gap-3 backdrop-blur-2xl">
-          {/* Row 1: 8 Core Product 3D Models Selector (Inspired by HRS Ferritic lineup) */}
-          <div className="space-y-1.5 pb-2.5 border-b border-white/10">
-            <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-slate-400">
-              <span className="flex items-center gap-1.5">
-                <Layers className="h-3 w-3 text-cyan-400" />
-                Select 3D Metal Product Model:
-              </span>
-              <span className="text-slate-500 font-normal">8 Certified Shapes</span>
-            </div>
+          {/* Row 1: Product 3D Models Selector (Unless compact mode requested) */}
+          {!compactControls && (
+            <div className="space-y-1.5 pb-2.5 border-b border-white/10">
+              <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                <span className="flex items-center gap-1.5">
+                  <Layers className="h-3 w-3 text-cyan-400" />
+                  Select 3D Metal Product Model:
+                </span>
+                <span className="text-slate-500 font-normal">8 Certified Shapes</span>
+              </div>
 
-            <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-white/5">
-              {productTabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveModel(tab.id)}
-                  className={`min-h-[40px] px-2 py-1.5 rounded-lg text-xs font-semibold transition-all flex flex-col items-center justify-center leading-tight ${
-                    activeModel === tab.id
-                      ? "bg-[#FF3B30] text-white shadow-lg shadow-red-500/30 scale-[1.02]"
-                      : "text-slate-400 hover:text-white hover:bg-slate-800"
-                  }`}
-                >
-                  <span>{tab.label}</span>
-                </button>
-              ))}
+              <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-white/5">
+                {productTabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setActiveModel(tab.id)}
+                    className={`min-h-[40px] px-2 py-1.5 rounded-lg text-xs font-semibold transition-all flex flex-col items-center justify-center leading-tight ${
+                      activeModel === tab.id
+                        ? "bg-[#FF3B30] text-white shadow-lg shadow-red-500/30 scale-[1.02]"
+                        : "text-slate-400 hover:text-white hover:bg-slate-800"
+                    }`}
+                  >
+                    <span>{tab.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Row 2: Metallurgy Shader Finishes + Isometric Camera Reset */}
+          {/* Row 2: Metallurgy Shader Finishes + Reset Camera Button */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1">
                 <Zap className="h-3 w-3 text-amber-400" />
-                Material Finish:
+                Finish:
               </span>
 
               <div className="flex flex-wrap gap-1.5">
@@ -708,7 +850,6 @@ export default function MetalHeroScene() {
               </div>
             </div>
 
-            {/* Reset Camera to Default Isometric Angle */}
             <button
               type="button"
               onClick={handleResetCamera}
@@ -716,7 +857,7 @@ export default function MetalHeroScene() {
               title="Reset 360° Orbit View"
             >
               <RotateCcw className="h-3.5 w-3.5 text-cyan-400" />
-              <span>Reset 3D Angle</span>
+              <span>Reset Angle</span>
             </button>
           </div>
         </div>

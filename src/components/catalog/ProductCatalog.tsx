@@ -257,15 +257,16 @@ export default function ProductCatalog() {
             return (
               <div
                 key={product.id}
-                className="glass-panel p-6 sm:p-7 rounded-2xl border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between group relative overflow-hidden"
+                className="volumetric-rim-card p-6 sm:p-7 rounded-3xl flex flex-col justify-between group relative overflow-hidden shadow-2xl"
               >
-                {/* Metallic glow background */}
-                <div className="absolute -top-16 -right-16 w-36 h-36 bg-slate-700/10 rounded-full blur-2xl group-hover:bg-red-500/10 transition-all" />
+                {/* Volumetric Studio Rim Lighting Glow Behind Metal Card */}
+                <div className="absolute -top-20 -right-20 w-48 h-48 bg-sky-500/12 rounded-full blur-3xl group-hover:bg-red-500/18 transition-all duration-500 pointer-events-none" />
+                <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-red-500/8 rounded-full blur-3xl group-hover:bg-sky-500/12 transition-all duration-500 pointer-events-none" />
 
-                <div className="space-y-4">
+                <div className="space-y-4 relative z-10">
                   {/* Category Header & LIVE STOCK DISPATCH BADGE */}
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-semibold">
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-bold">
                       {product.category.replace(/-/g, " ")}
                     </span>
 
@@ -287,7 +288,7 @@ export default function ProductCatalog() {
                   </div>
 
                   {/* Technical Specifications Highlights */}
-                  <div className="p-3.5 rounded-xl bg-slate-900/80 border border-white/5 space-y-2 text-xs font-mono">
+                  <div className="p-4 rounded-2xl bg-[#030508]/80 border border-white/8 space-y-2 text-xs font-mono backdrop-blur-md">
                     <div className="flex items-start justify-between gap-2">
                       <span className="text-slate-400 shrink-0">Size Range:</span>
                       <span className="text-slate-200 text-right">{product.sizeRange}</span>

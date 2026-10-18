@@ -248,9 +248,12 @@ export default function ProductDetailClient({
           </div>
         </div>
 
-        {/* Right Column: 3D Interactive Model Viewer with Exploded View */}
+        {/* Right Column: 3D Interactive Model Viewer with Volumetric Studio Stage */}
         <div className="lg:col-span-6 w-full">
-          <div className="w-full h-[540px] sm:h-[620px] rounded-3xl overflow-hidden border border-white/15 shadow-2xl bg-slate-950 relative">
+          <div className="relative w-full h-[540px] sm:h-[620px] rounded-3xl overflow-hidden border border-white/15 shadow-2xl bg-[#030508] group">
+            {/* Volumetric Studio Rim Backlights */}
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_35%,rgba(56,189,248,0.14),transparent_65%)]" />
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_80%_80%,rgba(239,68,68,0.08),transparent_60%)]" />
             <MetalHeroScene initialModel={modelType} compactControls={false} />
           </div>
         </div>
@@ -259,7 +262,7 @@ export default function ProductDetailClient({
       {/* 3. DEEP TECHNICAL SPECIFICATION & COMPLIANCE BENTO GRID */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
         {/* Bento 1: Standards & Dimensions */}
-        <div className="glass-panel p-6 rounded-2xl border border-white/10 space-y-4">
+        <div className="volumetric-rim-card p-6 rounded-3xl space-y-4 shadow-2xl">
           <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 uppercase font-bold">
             <Layers className="h-4 w-4" />
             <span>Dimensional Standards</span>
@@ -283,7 +286,7 @@ export default function ProductDetailClient({
         </div>
 
         {/* Bento 2: Metallurgical Grades Available */}
-        <div className="glass-panel p-6 rounded-2xl border border-white/10 space-y-4">
+        <div className="volumetric-rim-card p-6 rounded-3xl space-y-4 shadow-2xl">
           <div className="flex items-center gap-2 text-xs font-mono text-amber-400 uppercase font-bold">
             <Award className="h-4 w-4" />
             <span>Certified Material Grades</span>
@@ -292,7 +295,7 @@ export default function ProductDetailClient({
 
           <div className="flex flex-wrap gap-1.5">
             {product.grades.stainlessSteel?.map((g) => (
-              <span key={g} className="px-2 py-1 rounded bg-slate-900 border border-white/5 text-[11px] font-mono text-slate-200">
+              <span key={g} className="px-2 py-1 rounded bg-[#030508]/80 border border-white/8 text-[11px] font-mono text-slate-200">
                 {g}
               </span>
             ))}
@@ -307,7 +310,7 @@ export default function ProductDetailClient({
               </span>
             ))}
             {product.grades.carbonSteel?.map((g) => (
-              <span key={g} className="px-2 py-1 rounded bg-slate-900 border border-white/5 text-[11px] font-mono text-slate-300">
+              <span key={g} className="px-2 py-1 rounded bg-[#030508]/80 border border-white/8 text-[11px] font-mono text-slate-300">
                 {g}
               </span>
             ))}
@@ -315,18 +318,18 @@ export default function ProductDetailClient({
         </div>
 
         {/* Bento 3: Third Party Inspection & Seaworthy Logistics */}
-        <div className="glass-panel p-6 rounded-2xl border border-white/10 space-y-4">
+        <div className="volumetric-rim-card p-6 rounded-3xl space-y-4 shadow-2xl">
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase font-bold">
             <ShieldCheck className="h-4 w-4" />
             <span>International Compliance</span>
           </div>
           <h3 className="text-lg font-bold text-white">Inspection &amp; Logistics</h3>
 
-          <p className="text-xs text-slate-400 leading-relaxed">
+          <p className="text-xs text-slate-300 leading-relaxed">
             Witnessed testing arranged routinely with Lloyd's Register (LRIS), DNV, TUV, Bureau Veritas, and IBR.
           </p>
 
-          <div className="p-3 rounded-xl bg-slate-900/60 border border-white/5 space-y-1 text-xs font-mono">
+          <div className="p-3 rounded-2xl bg-[#030508]/80 border border-white/8 space-y-1 text-xs font-mono">
             <div className="text-white font-bold flex items-center gap-1.5">
               <Anchor className="h-3.5 w-3.5 text-cyan-400" />
               <span>Direct Port Loading</span>
@@ -346,10 +349,10 @@ export default function ProductDetailClient({
             <Link
               key={rel.id}
               href={`/products/${rel.id}`}
-              className="glass-panel p-5 rounded-2xl border border-white/10 hover:border-red-500/40 transition-all group flex flex-col justify-between"
+              className="volumetric-rim-card p-5 rounded-3xl transition-all group flex flex-col justify-between"
             >
               <div className="space-y-1.5">
-                <span className="text-[10px] font-mono uppercase text-cyan-400">
+                <span className="text-[10px] font-mono uppercase text-cyan-400 font-bold">
                   {rel.category.replace(/-/g, " ")}
                 </span>
                 <h4 className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">
@@ -358,12 +361,54 @@ export default function ProductDetailClient({
                 <p className="text-xs text-slate-400 line-clamp-2">{rel.tagline}</p>
               </div>
 
-              <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs font-mono text-slate-400 group-hover:text-white transition-colors">
+              <div className="pt-3 mt-3 border-t border-white/8 flex items-center justify-between text-xs font-mono text-slate-400 group-hover:text-white transition-colors">
                 <span>View Technical Specs &amp; 3D</span>
                 <ArrowRight className="h-3.5 w-3.5 text-red-400 group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
           ))}
+        </div>
+      </div>
+
+      {/* 5. FLOATING STICKY ACTION DOCK (APPLE-GRADE PROCUREMENT BAR) */}
+      <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 z-40 max-w-xl pointer-events-none">
+        <div className="pointer-events-auto flex items-center justify-between gap-3 p-3 rounded-2xl border border-white/15 bg-[#030508]/92 backdrop-blur-2xl shadow-2xl shadow-black/80">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-9 h-9 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center shrink-0">
+              <Layers className="w-4 h-4 text-red-400" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-xs font-bold text-white truncate">{product.name}</div>
+              <div className="text-[10px] font-mono text-cyan-300 truncate">
+                Grade: {selectedGrade} &bull; {customDimension}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => setIsMtcOpen(true)}
+              className="min-h-[38px] px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/10 text-slate-200 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-colors"
+              title="Inspect EN 10204 3.1 MTC"
+            >
+              <FileCheck2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="hidden sm:inline">MTC 3.1</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              className={`min-h-[38px] px-4 py-1.5 rounded-xl font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-lg active:scale-95 ${
+                addedNotice
+                  ? "bg-emerald-600 text-white shadow-emerald-500/30"
+                  : "bg-[#EF4444] hover:bg-red-600 text-white shadow-red-500/25"
+              }`}
+            >
+              {addedNotice ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+              <span>{addedNotice ? "Added!" : "Add to RFQ"}</span>
+            </button>
+          </div>
         </div>
       </div>
 

@@ -222,67 +222,96 @@ export default function MetalHeroScene({
     const envMap = createProceduralStudioEnvironment();
     scene.environment = envMap;
 
-    // 7. Studio Key, Rim, and Fill Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+    // 7. Elite 5-Point Studio Softbox & Dual Volumetric Rim Lighting Rig
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.42);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
-    keyLight.position.set(5, 6, 4);
+    // Key Light: High-Intensity Directional Studio Softbox (Upper Front Right)
+    const keyLight = new THREE.DirectionalLight(0xffffff, 4.2);
+    keyLight.position.set(4.5, 6.5, 4.5);
     scene.add(keyLight);
 
-    const rimCyan = new THREE.DirectionalLight(0x00d2ff, 2.4);
-    rimCyan.position.set(-5, 2, -4);
+    // Fill Light: Soft Skylight (Front Left)
+    const fillLight = new THREE.DirectionalLight(0xe0f2fe, 1.8);
+    fillLight.position.set(-5, 2.5, 3.5);
+    scene.add(fillLight);
+
+    // Overhead Softbox: Top-Down Vertical Illumination
+    const overheadLight = new THREE.DirectionalLight(0xffffff, 2.5);
+    overheadLight.position.set(0, 8, 0);
+    scene.add(overheadLight);
+
+    // Volumetric Rim Light A: Cool Steel-Blue (Rear Left Edge Highlight)
+    const rimCyan = new THREE.DirectionalLight(0x38bdf8, 3.8);
+    rimCyan.position.set(-5.5, 2.5, -4.5);
     scene.add(rimCyan);
 
-    const rimRed = new THREE.DirectionalLight(0xff3b30, 1.9);
-    rimRed.position.set(4, -4, 3);
+    // Volumetric Rim Light B: Sharp Safety-Red / Amber (Rear Right Edge Highlight)
+    const rimRed = new THREE.DirectionalLight(0xef4444, 2.4);
+    rimRed.position.set(4.5, -2, -4);
     scene.add(rimRed);
 
-    // 8. Luxury Holographic Background Geometry
-    const bgGroup = new THREE.Group();
-    scene.add(bgGroup);
+    // 8. Luxury Studio Stage Turntable Pedestal
+    const stageGroup = new THREE.Group();
+    scene.add(stageGroup);
 
-    const ring1Geo = new THREE.RingGeometry(2.4, 2.415, 96);
-    const ring1Mat = new THREE.MeshBasicMaterial({
-      color: 0x00d2ff,
+    // Circular Turntable Plinth
+    const pedestalGeo = new THREE.CylinderGeometry(2.35, 2.42, 0.08, 96);
+    const pedestalMat = new THREE.MeshStandardMaterial({
+      color: 0x090d16,
+      metalness: 0.95,
+      roughness: 0.22,
+      envMap: envMap,
+    });
+    const pedestal = new THREE.Mesh(pedestalGeo, pedestalMat);
+    pedestal.position.set(0, -1.45, 0);
+    stageGroup.add(pedestal);
+
+    // Concentric Turntable Rim Glow Ring
+    const stageRingGeo = new THREE.RingGeometry(2.34, 2.37, 96);
+    const stageRingMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.18,
+      opacity: 0.45,
     });
-    const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
-    ring1.rotation.x = Math.PI / 2;
-    bgGroup.add(ring1);
+    const stageRing = new THREE.Mesh(stageRingGeo, stageRingMat);
+    stageRing.rotation.x = Math.PI / 2;
+    stageRing.position.set(0, -1.405, 0);
+    stageGroup.add(stageRing);
 
-    const ring2Geo = new THREE.RingGeometry(2.65, 2.665, 96);
-    const ring2Mat = new THREE.MeshBasicMaterial({
-      color: 0xff3b30,
+    // Concentric Inner Stage Track
+    const innerTrackGeo = new THREE.RingGeometry(1.6, 1.615, 96);
+    const innerTrackMat = new THREE.MeshBasicMaterial({
+      color: 0xef4444,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.15,
+      opacity: 0.25,
     });
-    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-    ring2.rotation.x = Math.PI / 3;
-    ring2.rotation.y = Math.PI / 6;
-    bgGroup.add(ring2);
+    const innerTrack = new THREE.Mesh(innerTrackGeo, innerTrackMat);
+    innerTrack.rotation.x = Math.PI / 2;
+    innerTrack.position.set(0, -1.405, 0);
+    stageGroup.add(innerTrack);
 
-    const particleCount = 180;
+    // Holographic Ambient Particulates
+    const particleCount = 120;
     const particlePositions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
-      particlePositions[i * 3] = (Math.random() - 0.5) * 10;
-      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 8;
+      particlePositions[i * 3] = (Math.random() - 0.5) * 8;
+      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 6;
       particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 8;
     }
     const particleGeo = new THREE.BufferGeometry();
     particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
     const particleMat = new THREE.PointsMaterial({
       color: 0x38bdf8,
-      size: 0.04,
+      size: 0.035,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.65,
       blending: THREE.AdditiveBlending,
     });
     const particles = new THREE.Points(particleGeo, particleMat);
-    bgGroup.add(particles);
+    stageGroup.add(particles);
 
     // 9. PROCEDURAL 3D MODELS (ALL 8 CORE PRODUCTS + EXPLODED VIEW SUPPORT)
     const elementsGroup = new THREE.Group();
@@ -634,9 +663,9 @@ export default function MetalHeroScene({
         part.mesh.position.lerp(target, 0.08);
       });
 
-      // Background rings
-      ring1.rotation.z += 0.0015;
-      ring2.rotation.z -= 0.002;
+      // Background stage turntable tracks
+      stageRing.rotation.z += 0.0015;
+      innerTrack.rotation.z -= 0.002;
 
       // Bokeh particle float
       const pos = particleGeo.attributes.position.array as Float32Array;
@@ -670,27 +699,27 @@ export default function MetalHeroScene({
     let emissiveIntensity = 0;
 
     if (activeFinish === "ss316-mirror") {
-      targetColor = 0xeeeeee;
+      targetColor = 0xf8fafc; // Luminous Chrome / 316L mirror polish
       targetMetalness = 0.99;
-      targetRoughness = 0.06; // Ultra mirror polish
+      targetRoughness = 0.04;
     } else if (activeFinish === "inconel625") {
-      targetColor = 0xc4a679; // High-nickel champagne gold sheen
-      targetMetalness = 0.94;
-      targetRoughness = 0.22;
+      targetColor = 0xd9be8e; // High-nickel champagne gold alloy
+      targetMetalness = 0.96;
+      targetRoughness = 0.16;
     } else if (activeFinish === "titanium-satin") {
-      targetColor = 0x8fa3b2; // Satin titanium blue-gray
-      targetMetalness = 0.88;
-      targetRoughness = 0.28;
+      targetColor = 0x98adbe; // Satin titanium blue-gray luster
+      targetMetalness = 0.92;
+      targetRoughness = 0.20;
     } else if (activeFinish === "forged-glow") {
-      targetColor = 0xff3b00; // Thermal glow
+      targetColor = 0xff3b00; // Thermal induction core
       targetMetalness = 0.82;
-      targetRoughness = 0.25;
-      emissiveColor = 0xff4000;
-      emissiveIntensity = 0.95;
+      targetRoughness = 0.22;
+      emissiveColor = 0xff3b00;
+      emissiveIntensity = 1.25;
     } else if (activeFinish === "carbon-matte") {
-      targetColor = 0x5a6578; // Normalized carbon steel
-      targetMetalness = 0.85;
-      targetRoughness = 0.45;
+      targetColor = 0x475569; // Precision graphite ASTM A106 carbon steel
+      targetMetalness = 0.88;
+      targetRoughness = 0.35;
     }
 
     Object.values(modelMeshesRef.current).forEach((groupOrMesh) => {

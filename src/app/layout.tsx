@@ -63,7 +63,7 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-[#05070B] text-slate-100 flex flex-col min-h-screen selection:bg-red-500/30 selection:text-white relative`}
+        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-[#030508] text-slate-100 flex flex-col min-h-screen selection:bg-red-500/30 selection:text-white relative`}
       >
         <SmoothScroll>
           <AmbienceProvider>

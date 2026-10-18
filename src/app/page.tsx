@@ -83,7 +83,7 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <button
               onClick={openRFQModal}
-              className="px-6 py-3.5 rounded-xl bg-[#E63946] hover:bg-[#D62839] text-white font-bold text-sm shadow-xl shadow-red-500/25 hover:shadow-red-500/40 transition-all flex items-center gap-2 group"
+              className="min-h-[48px] px-7 py-3.5 rounded-full bg-[#FF3B30] hover:bg-red-600 text-white font-bold text-xs sm:text-sm font-mono uppercase tracking-wider shadow-2xl shadow-red-500/30 hover:shadow-red-500/50 transition-all flex items-center gap-2.5 group active:scale-95"
             >
               <FileText className="h-4 w-4" />
               <span>Launch International RFQ Basket</span>
@@ -92,10 +92,10 @@ export default function HomePage() {
 
             <a
               href="#calculator-section"
-              className="px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-white/10 text-xs sm:text-sm font-mono flex items-center gap-2 transition-all"
+              className="min-h-[48px] px-6 py-3.5 rounded-full bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white border border-white/10 text-xs sm:text-sm font-mono flex items-center gap-2 transition-all backdrop-blur-xl"
             >
               <Calculator className="h-4 w-4 text-cyan-400" />
-              <span>Engineering Calculator</span>
+              <span>Weight Calculator</span>
             </a>
           </div>
 
@@ -200,7 +200,7 @@ export default function HomePage() {
       </section>
 
       {/* 7. DIRECT LEAD CAPTURE & COMMERCIAL QUOTE FORM */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <section id="lead-capture-section" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <DirectLeadCapture />
       </section>
 

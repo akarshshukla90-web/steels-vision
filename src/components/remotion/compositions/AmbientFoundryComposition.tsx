@@ -63,14 +63,14 @@ export const AmbientFoundryComposition: React.FC<AmbientFoundryProps> = ({
       case "molten":
       default:
         return {
-          primaryGlow: "rgba(255, 59, 48, 0.13)",
-          secondaryGlow: "rgba(255, 149, 0, 0.08)",
-          accentGlow: "rgba(225, 29, 72, 0.07)",
-          particleColors: ["#FF3B30", "#FF6B00", "#FF9500", "#FFB340"],
-          laserColor: "rgba(255, 59, 48, 0.65)",
-          laserGlow: "rgba(255, 59, 48, 0.2)",
-          cadText: "rgba(255, 87, 34, 0.4)",
-          gridLine: "rgba(255, 255, 255, 0.025)",
+          primaryGlow: "rgba(249, 115, 22, 0.14)", // Molten Amber #F97316
+          secondaryGlow: "rgba(239, 68, 68, 0.09)", // Safety Red #EF4444
+          accentGlow: "rgba(245, 158, 11, 0.08)", // Warm Forging Amber
+          particleColors: ["#F97316", "#EF4444", "#F59E0B", "#FCD34D"],
+          laserColor: "rgba(249, 115, 22, 0.7)",
+          laserGlow: "rgba(249, 115, 22, 0.25)",
+          cadText: "rgba(249, 115, 22, 0.45)",
+          gridLine: "rgba(42, 50, 65, 0.25)", // Anodized Steel Silver #2A3241
         };
     }
   }, [mode]);
@@ -93,7 +93,7 @@ export const AmbientFoundryComposition: React.FC<AmbientFoundryProps> = ({
       style={{
         width: "100%",
         height: "100%",
-        backgroundColor: "#030508",
+        backgroundColor: "#080A0F",
         position: "relative",
         overflow: "hidden",
         userSelect: "none",

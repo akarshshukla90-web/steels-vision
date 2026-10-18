@@ -222,45 +222,45 @@ export default function MetalHeroScene({
     const envMap = createProceduralStudioEnvironment();
     scene.environment = envMap;
 
-    // 7. Elite 5-Point Studio Softbox & Dual Volumetric Rim Lighting Rig
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.42);
+    // 7. Elite Foundry 5-Point Studio Rig (High-Bay Key Light + Thermal Rim Light)
+    const ambientLight = new THREE.AmbientLight(0x1e293b, 0.55);
     scene.add(ambientLight);
 
-    // Key Light: High-Intensity Directional Studio Softbox (Upper Front Right)
-    const keyLight = new THREE.DirectionalLight(0xffffff, 4.2);
-    keyLight.position.set(4.5, 6.5, 4.5);
+    // Key Light: 5500K High-Bay Cool White Overhead Key Light (Upper Front Right)
+    const keyLight = new THREE.DirectionalLight(0xf8fafc, 4.5);
+    keyLight.position.set(3.5, 7.5, 4.0);
     scene.add(keyLight);
 
-    // Fill Light: Soft Skylight (Front Left)
-    const fillLight = new THREE.DirectionalLight(0xe0f2fe, 1.8);
-    fillLight.position.set(-5, 2.5, 3.5);
+    // Fill Light: Anodized Steel-Blue Fill (Front Left)
+    const fillLight = new THREE.DirectionalLight(0x38bdf8, 2.6);
+    fillLight.position.set(-5.0, 3.0, -3.5);
     scene.add(fillLight);
 
     // Overhead Softbox: Top-Down Vertical Illumination
-    const overheadLight = new THREE.DirectionalLight(0xffffff, 2.5);
+    const overheadLight = new THREE.DirectionalLight(0xffffff, 2.8);
     overheadLight.position.set(0, 8, 0);
     scene.add(overheadLight);
 
-    // Volumetric Rim Light A: Cool Steel-Blue (Rear Left Edge Highlight)
-    const rimCyan = new THREE.DirectionalLight(0x38bdf8, 3.8);
+    // Volumetric Rim Light A: Cool Quench Steel-Blue (Rear Left Edge Highlight)
+    const rimCyan = new THREE.DirectionalLight(0x38bdf8, 3.6);
     rimCyan.position.set(-5.5, 2.5, -4.5);
     scene.add(rimCyan);
 
-    // Volumetric Rim Light B: Sharp Safety-Red / Amber (Rear Right Edge Highlight)
-    const rimRed = new THREE.DirectionalLight(0xef4444, 2.4);
-    rimRed.position.set(4.5, -2, -4);
-    scene.add(rimRed);
+    // Volumetric Rim Light B: Thermal Forging Molten Amber (Rear Right Edge Highlight)
+    const rimAmber = new THREE.DirectionalLight(0xf97316, 3.6);
+    rimAmber.position.set(5.0, -1.5, -4.0);
+    scene.add(rimAmber);
 
-    // 8. Luxury Holographic Background Geometry
+    // 8. Luxury Holographic Background Geometry (Non-intersecting floating rings)
     const bgGroup = new THREE.Group();
     scene.add(bgGroup);
 
     const ring1Geo = new THREE.RingGeometry(2.4, 2.415, 96);
     const ring1Mat = new THREE.MeshBasicMaterial({
-      color: 0x00d2ff,
+      color: 0xf97316, // Molten Amber
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.18,
+      opacity: 0.22,
     });
     const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
     ring1.rotation.x = Math.PI / 2;
@@ -268,10 +268,10 @@ export default function MetalHeroScene({
 
     const ring2Geo = new THREE.RingGeometry(2.65, 2.665, 96);
     const ring2Mat = new THREE.MeshBasicMaterial({
-      color: 0xff3b30,
+      color: 0x38bdf8, // Steel Blue
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.15,
+      opacity: 0.18,
     });
     const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
     ring2.rotation.x = Math.PI / 3;
@@ -288,10 +288,10 @@ export default function MetalHeroScene({
     const particleGeo = new THREE.BufferGeometry();
     particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
     const particleMat = new THREE.PointsMaterial({
-      color: 0x38bdf8,
-      size: 0.04,
+      color: 0xf97316, // Molten Amber Embers
+      size: 0.045,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.75,
       blending: THREE.AdditiveBlending,
     });
     const particles = new THREE.Points(particleGeo, particleMat);
@@ -683,27 +683,27 @@ export default function MetalHeroScene({
     let emissiveIntensity = 0;
 
     if (activeFinish === "ss316-mirror") {
-      targetColor = 0xf8fafc; // Luminous Chrome / 316L mirror polish
+      targetColor = 0xf8fafc; // Luminous 316L mirror polish
       targetMetalness = 0.99;
       targetRoughness = 0.04;
     } else if (activeFinish === "inconel625") {
-      targetColor = 0xd9be8e; // High-nickel champagne gold alloy
+      targetColor = 0xd9be8e; // High-nickel champagne alloy luster
       targetMetalness = 0.96;
-      targetRoughness = 0.16;
+      targetRoughness = 0.15;
     } else if (activeFinish === "titanium-satin") {
       targetColor = 0x98adbe; // Satin titanium blue-gray luster
       targetMetalness = 0.92;
       targetRoughness = 0.20;
     } else if (activeFinish === "forged-glow") {
-      targetColor = 0xff3b00; // Thermal induction core
+      targetColor = 0xf97316; // Molten induction forging core (#F97316)
       targetMetalness = 0.82;
       targetRoughness = 0.22;
-      emissiveColor = 0xff3b00;
-      emissiveIntensity = 1.25;
+      emissiveColor = 0xf97316;
+      emissiveIntensity = 1.35;
     } else if (activeFinish === "carbon-matte") {
-      targetColor = 0x475569; // Precision graphite ASTM A106 carbon steel
+      targetColor = 0x334155; // ASTM A106 heavy industrial matte graphite
       targetMetalness = 0.88;
-      targetRoughness = 0.35;
+      targetRoughness = 0.32;
     }
 
     Object.values(modelMeshesRef.current).forEach((groupOrMesh) => {
@@ -749,12 +749,12 @@ export default function MetalHeroScene({
   ];
 
   return (
-    <div className="relative w-full h-full min-h-[620px] lg:min-h-[680px] flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#030508]/80 backdrop-blur-xl shadow-2xl">
-      {/* 1. CINEMATIC ATMOSPHERIC BACKGROUND */}
+    <div className="relative w-full h-full min-h-[620px] lg:min-h-[680px] flex flex-col justify-between overflow-hidden rounded-3xl border border-[#2A3241] bg-[#0F131C]/90 backdrop-blur-xl shadow-2xl">
+      {/* 1. CINEMATIC FOUNDRY ATMOSPHERIC BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-[420px] h-[420px] bg-red-600/10 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-[420px] h-[420px] bg-cyan-500/10 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:48px_48px]" />
+        <div className="absolute top-1/4 left-1/4 w-[420px] h-[420px] bg-orange-600/10 rounded-full blur-[130px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-[420px] h-[420px] bg-sky-500/10 rounded-full blur-[130px] animate-pulse" />
+        <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#2A3241_1px,transparent_1px),linear-gradient(to_bottom,#2A3241_1px,transparent_1px)] bg-[size:48px_48px]" />
       </div>
 
       {/* 2. Full 360° Interactive WebGL Canvas */}
@@ -765,13 +765,13 @@ export default function MetalHeroScene({
         }`}
       />
 
-      {/* 3. TOP TELEMETRY HUD */}
+      {/* 3. TOP TELEMETRY HUD (MILLED TITANIUM) */}
       <div className="relative z-10 w-full p-3 sm:p-4 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/85 border border-white/10 backdrop-blur-xl text-[11px] font-mono text-slate-300 pointer-events-auto shadow-lg">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#080A0F]/90 border border-[#2A3241] backdrop-blur-xl text-[11px] font-mono text-slate-300 pointer-events-auto shadow-lg">
           <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="text-white font-semibold">WEBGL PBR 2.0</span>
           <span className="text-slate-600">|</span>
-          <span className="text-cyan-400">{fpsDisplay} FPS</span>
+          <span className="text-amber-400 font-bold">{fpsDisplay} FPS</span>
           <span className="text-slate-600">|</span>
           <span className="text-slate-400 hidden sm:inline-flex items-center gap-1">
             <Move className="h-3 w-3 text-cyan-400" />
@@ -784,19 +784,19 @@ export default function MetalHeroScene({
           <button
             type="button"
             onClick={() => setIsCinemaOpen(true)}
-            className="min-h-[34px] px-3.5 py-1 rounded-full text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-xl bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 group"
+            className="min-h-[34px] px-3.5 py-1 rounded-full text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-xl bg-orange-500/15 hover:bg-orange-500/25 text-amber-400 border border-orange-500/30 group active:scale-95"
           >
-            <Play className="h-3.5 w-3.5 fill-red-400 group-hover:scale-110 transition-transform" />
+            <Play className="h-3.5 w-3.5 fill-amber-400 group-hover:scale-110 transition-transform" />
             <span>Brand Film</span>
           </button>
 
           <button
             type="button"
             onClick={() => setIsExploded((prev) => !prev)}
-            className={`min-h-[34px] px-3.5 py-1 rounded-full text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-xl ${
+            className={`min-h-[34px] px-3.5 py-1 rounded-full text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-xl active:scale-95 ${
               isExploded
-                ? "bg-[#EF4444] text-white shadow-red-500/30 border border-red-400"
-                : "bg-slate-950/85 hover:bg-slate-900 text-slate-200 border border-white/15"
+                ? "bg-[#F97316] text-white shadow-orange-500/30 border border-orange-400"
+                : "bg-[#080A0F]/90 hover:bg-[#12161F] text-slate-200 border border-[#2A3241]"
             }`}
           >
             <Split className="h-3.5 w-3.5" />
@@ -807,28 +807,28 @@ export default function MetalHeroScene({
 
       {/* 4. FROSTED GLASS DYNAMIC COCKPIT CONTROLS (STREAMLINED & NON-OVERLAPPING) */}
       <div className="relative z-10 w-full p-2.5 sm:p-3 pointer-events-auto mt-auto">
-        <div className="w-full glass-panel bg-[#030508]/85 border border-white/10 rounded-2xl p-2.5 sm:p-3 shadow-2xl flex flex-col gap-2 backdrop-blur-2xl">
+        <div className="w-full glass-panel bg-[#0F131C]/95 border border-[#2A3241] rounded-2xl p-2.5 sm:p-3 shadow-2xl flex flex-col gap-2 backdrop-blur-2xl">
           {/* Row 1: Product 3D Models Selector */}
           {!compactControls && (
-            <div className="space-y-1 pb-1.5 border-b border-white/8">
+            <div className="space-y-1 pb-1.5 border-b border-[#2A3241]/70">
               <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-slate-400 px-0.5">
-                <span className="flex items-center gap-1 text-cyan-400">
+                <span className="flex items-center gap-1 text-amber-400 font-bold">
                   <Layers className="h-3 w-3" />
                   Select Model:
                 </span>
-                <span className="text-slate-500 font-normal">8 Certified Shapes</span>
+                <span className="text-slate-400 font-normal">8 Certified Shapes</span>
               </div>
 
-              <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 bg-slate-950/70 p-1 rounded-xl border border-white/5">
+              <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 bg-[#080A0F]/80 p-1 rounded-xl border border-[#2A3241]">
                 {productTabs.map((tab) => (
                   <button
                     key={tab.id}
                     type="button"
                     onClick={() => setActiveModel(tab.id)}
-                    className={`py-1 px-1.5 rounded-lg text-[11px] font-semibold transition-all flex items-center justify-center text-center ${
+                    className={`py-1 px-1.5 rounded-lg text-[11px] font-semibold transition-all flex items-center justify-center text-center active:scale-95 ${
                       activeModel === tab.id
-                        ? "bg-[#EF4444] text-white shadow-md shadow-red-500/30 font-bold"
-                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                        ? "bg-[#F97316] text-white shadow-md shadow-orange-500/30 font-bold"
+                        : "text-slate-300 hover:text-white hover:bg-white/5"
                     }`}
                   >
                     <span>{tab.label}</span>
@@ -858,10 +858,10 @@ export default function MetalHeroScene({
                     key={fin.id}
                     type="button"
                     onClick={() => setActiveFinish(fin.id as MaterialFinish)}
-                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono transition-all ${
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono transition-all active:scale-95 ${
                       activeFinish === fin.id
                         ? `${fin.style} shadow-sm`
-                        : "bg-slate-900/90 text-slate-400 hover:text-white hover:bg-slate-800"
+                        : "bg-[#080A0F]/90 text-slate-300 hover:text-white hover:bg-[#12161F] border border-[#2A3241]/70"
                     }`}
                   >
                     {fin.label}
@@ -873,7 +873,7 @@ export default function MetalHeroScene({
             <button
               type="button"
               onClick={handleResetCamera}
-              className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-white/10 text-[11px] font-mono text-slate-300 hover:text-white flex items-center justify-center gap-1 transition-all self-end sm:self-auto shrink-0"
+              className="px-2.5 py-1 rounded-lg bg-[#080A0F] hover:bg-[#12161F] border border-[#2A3241] text-[11px] font-mono text-slate-300 hover:text-white flex items-center justify-center gap-1 transition-all self-end sm:self-auto shrink-0 active:scale-95"
               title="Reset 360° Orbit View"
             >
               <RotateCcw className="h-3 w-3 text-cyan-400" />

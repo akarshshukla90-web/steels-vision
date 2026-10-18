@@ -133,9 +133,9 @@ export default function ProductCatalog() {
   return (
     <section className="w-full py-14 space-y-8" id="catalog-section">
       {/* Catalog Header & Search */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#2A3241]">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#E63946] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#F97316] uppercase tracking-wider font-bold">
             <Layers className="h-4 w-4" />
             <span>International Procurement Database</span>
           </div>
@@ -158,7 +158,7 @@ export default function ProductCatalog() {
               placeholder="Search grade (e.g. Inconel 625, 316L, X70)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white font-mono text-xs focus:outline-none focus:border-red-500 transition-all placeholder:text-slate-500 min-h-[46px]"
+              className="w-full pl-10 pr-4 py-3 bg-[#0F131C] border border-[#2A3241] rounded-xl text-white font-mono text-xs focus:outline-none focus:border-[#F97316] transition-all placeholder:text-slate-500 min-h-[46px]"
             />
           </div>
 
@@ -167,7 +167,7 @@ export default function ProductCatalog() {
             <select
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value as SortOrder)}
-              className="w-full px-3 py-3 bg-slate-900 border border-white/10 rounded-xl text-white font-mono text-xs focus:border-red-500 min-h-[46px] cursor-pointer"
+              className="w-full px-3 py-3 bg-[#0F131C] border border-[#2A3241] rounded-xl text-white font-mono text-xs focus:border-[#F97316] min-h-[46px] cursor-pointer"
             >
               <option value="default">Sort: Priority</option>
               <option value="a-z">Sort: A to Z</option>
@@ -188,10 +188,10 @@ export default function ProductCatalog() {
             <button
               key={s.id}
               onClick={() => setSelectedShape(s.id)}
-              className={`min-h-[44px] px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
+              className={`min-h-[44px] px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all active:scale-95 ${
                 selectedShape === s.id
-                  ? "bg-[#E63946] text-white shadow-lg shadow-red-500/25 font-bold"
-                  : "bg-slate-900/70 text-slate-300 hover:bg-slate-800 hover:text-white border border-white/5"
+                  ? "bg-[#F97316] text-white shadow-lg shadow-orange-500/25 font-bold"
+                  : "bg-[#0F131C] text-slate-300 hover:bg-[#12161F] hover:text-white border border-[#2A3241]"
               }`}
             >
               {s.label}
@@ -211,10 +211,10 @@ export default function ProductCatalog() {
             <button
               key={m.id}
               onClick={() => setSelectedMaterialClass(m.id)}
-              className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-mono transition-all ${
+              className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-mono transition-all active:scale-95 ${
                 selectedMaterialClass === m.id
                   ? "bg-slate-200 text-slate-950 font-bold border border-white shadow-md"
-                  : "bg-slate-900/50 text-slate-400 hover:text-white hover:bg-slate-800 border border-white/5"
+                  : "bg-[#0F131C]/60 text-slate-400 hover:text-white hover:bg-[#12161F] border border-[#2A3241]"
               }`}
             >
               {m.label}
@@ -288,7 +288,7 @@ export default function ProductCatalog() {
                   </div>
 
                   {/* Technical Specifications Highlights */}
-                  <div className="p-4 rounded-2xl bg-[#030508]/80 border border-white/8 space-y-2 text-xs font-mono backdrop-blur-md">
+                  <div className="p-4 rounded-2xl bg-[#080A0F]/85 border border-[#2A3241]/80 space-y-2 text-xs font-mono backdrop-blur-md">
                     <div className="flex items-start justify-between gap-2">
                       <span className="text-slate-400 shrink-0">Size Range:</span>
                       <span className="text-slate-200 text-right">{product.sizeRange}</span>

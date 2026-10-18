@@ -2,14 +2,15 @@
 
 @layer base {
   :root {
-    --bg-primary: #030508;
-    --bg-secondary: #070B12;
-    --bg-tertiary: #0D131F;
-    --card-bg: rgba(7, 11, 18, 0.65);
-    --border-color: rgba(255, 255, 255, 0.07);
-    --border-glow: rgba(56, 189, 248, 0.22);
+    --bg-primary: #080A0F;
+    --bg-secondary: #0F131C;
+    --bg-tertiary: #12161F;
+    --card-bg: rgba(18, 22, 31, 0.85);
+    --border-color: #2A3241;
+    --border-glow: rgba(56, 189, 248, 0.25);
     --safety-red: #EF4444;
     --safety-red-hover: #DC2626;
+    --molten-amber: #F97316;
     --steel-cyan: #38BDF8;
     --steel-metallic: #CBD5E1;
   }
@@ -29,50 +30,50 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #030508;
+  background: #080A0F;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #111827;
+  background: #2A3241;
   border-radius: 4px;
-  border: 1px solid #030508;
+  border: 1px solid #080A0F;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #EF4444;
+  background: #F97316;
 }
 
-/* Apple-Grade Glassmorphism & Bento Styling */
+/* Authentic Milled Titanium & Industrial Glassmorphism Panels */
 .glass-panel {
-  background: rgba(7, 11, 18, 0.62);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.75);
+  background: linear-gradient(180deg, rgba(18, 22, 31, 0.88) 0%, rgba(15, 19, 28, 0.94) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid #2A3241;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .glass-panel-subtle {
-  background: rgba(7, 11, 18, 0.38);
+  background: rgba(18, 22, 31, 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(42, 50, 65, 0.6);
 }
 
 .glass-panel-accent {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(7, 11, 18, 0.75) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(18, 22, 31, 0.85) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(249, 115, 22, 0.35);
 }
 
-/* Volumetric Studio Rim Lighting Effects */
+/* Heavy Industrial Volumetric Rim Panels */
 .volumetric-rim-card {
   position: relative;
-  background: rgba(7, 11, 18, 0.65);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(180deg, rgba(18, 22, 31, 0.82) 0%, rgba(15, 19, 28, 0.90) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid #2A3241;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .volumetric-rim-card::before {
@@ -81,13 +82,13 @@
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, transparent 45%, rgba(239, 68, 68, 0.2) 100%);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.3) 0%, transparent 45%, rgba(249, 115, 22, 0.25) 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
-  opacity: 0.6;
-  transition: opacity 0.35s ease;
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
 }
 
 .volumetric-rim-card:hover::before {
@@ -96,17 +97,22 @@
 
 .volumetric-rim-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), 0 0 30px -5px rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 35px -5px rgba(249, 115, 22, 0.15);
 }
 
 .metallic-text {
-  background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 45%, #94A3B8 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 50%, #94A3B8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .safety-glow {
   box-shadow: 0 0 30px rgba(239, 68, 68, 0.35);
+}
+
+.molten-glow {
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.35);
 }
 
 .cyan-glow {

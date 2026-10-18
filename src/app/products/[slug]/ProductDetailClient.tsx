@@ -121,7 +121,7 @@ export default function ProductDetailClient({
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
               {product.name}
             </h1>
-            <p className="text-sm font-mono text-[#FF3B30] font-semibold">
+            <p className="text-sm font-mono text-[#F97316] font-semibold">
               {product.tagline}
             </p>
           </div>
@@ -132,25 +132,25 @@ export default function ProductDetailClient({
 
           {/* Quick Specifications Pill Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-2">
-            <div className="p-3 rounded-xl bg-slate-900/80 border border-white/5 space-y-0.5">
-              <span className="text-[10px] font-mono text-slate-500 uppercase">Primary Standard</span>
+            <div className="p-3 rounded-xl bg-[#0F131C] border border-[#2A3241] space-y-0.5">
+              <span className="text-[10px] font-mono text-slate-400 uppercase">Primary Standard</span>
               <div className="text-xs font-bold text-white font-mono truncate">{product.standards[0]}</div>
             </div>
-            <div className="p-3 rounded-xl bg-slate-900/80 border border-white/5 space-y-0.5">
-              <span className="text-[10px] font-mono text-slate-500 uppercase">Size Availability</span>
+            <div className="p-3 rounded-xl bg-[#0F131C] border border-[#2A3241] space-y-0.5">
+              <span className="text-[10px] font-mono text-slate-400 uppercase">Size Availability</span>
               <div className="text-xs font-bold text-cyan-300 font-mono truncate">{product.sizeRange.split("|")[0]}</div>
             </div>
-            <div className="p-3 rounded-xl bg-slate-900/80 border border-white/5 space-y-0.5 col-span-2 sm:col-span-1">
-              <span className="text-[10px] font-mono text-slate-500 uppercase">Quality Grade</span>
+            <div className="p-3 rounded-xl bg-[#0F131C] border border-[#2A3241] space-y-0.5 col-span-2 sm:col-span-1">
+              <span className="text-[10px] font-mono text-slate-400 uppercase">Quality Grade</span>
               <div className="text-xs font-bold text-emerald-400 font-mono">100% PMI Cleared</div>
             </div>
           </div>
 
           {/* EMBEDDED INSTANT RFQ CONFIGURATOR DRAWER */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-slate-950/90 border border-white/15 space-y-4 shadow-xl">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#0F131C]/95 border border-[#2A3241] space-y-4 shadow-xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#2A3241]">
               <span className="text-xs font-mono uppercase tracking-wider text-white font-bold flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+                <Sparkles className="h-3.5 w-3.5 text-amber-400" />
                 Configure Custom RFQ Line Item
               </span>
               <span className="text-[10px] font-mono text-slate-400">Direct Export Desk</span>
@@ -165,7 +165,7 @@ export default function ProductDetailClient({
                   type="text"
                   value={selectedGrade}
                   onChange={(e) => setSelectedGrade(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-xs font-mono text-white focus:border-red-500"
+                  className="w-full px-3 py-2 bg-[#080A0F] border border-[#2A3241] rounded-lg text-xs font-mono text-white focus:border-[#F97316]"
                 />
               </div>
 
@@ -177,7 +177,7 @@ export default function ProductDetailClient({
                   type="text"
                   value={customDimension}
                   onChange={(e) => setCustomDimension(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-xs font-mono text-white focus:border-red-500"
+                  className="w-full px-3 py-2 bg-[#080A0F] border border-[#2A3241] rounded-lg text-xs font-mono text-white focus:border-[#F97316]"
                 />
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function ProductDetailClient({
                   min="1"
                   value={quantity}
                   onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                  className="w-full px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-xs font-mono text-white focus:border-red-500"
+                  className="w-full px-3 py-2 bg-[#080A0F] border border-[#2A3241] rounded-lg text-xs font-mono text-white focus:border-[#F97316]"
                 />
               </div>
 
@@ -203,7 +203,7 @@ export default function ProductDetailClient({
                 <select
                   value={unit}
                   onChange={(e) => setUnit(e.target.value as "Pieces" | "Meters" | "Metric Tons")}
-                  className="w-full px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-xs font-mono text-white focus:border-red-500"
+                  className="w-full px-3 py-2 bg-[#080A0F] border border-[#2A3241] rounded-lg text-xs font-mono text-white focus:border-[#F97316]"
                 >
                   <option value="Pieces">Pieces (Pcs)</option>
                   <option value="Meters">Meters (MTR)</option>
@@ -220,7 +220,7 @@ export default function ProductDetailClient({
                 className={`flex-1 w-full min-h-[46px] py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all ${
                   addedNotice
                     ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/30"
-                    : "bg-[#FF3B30] hover:bg-red-600 text-white shadow-lg shadow-red-500/25 active:scale-95"
+                    : "bg-[#F97316] hover:bg-orange-600 text-white shadow-lg shadow-orange-500/25 active:scale-95"
                 }`}
               >
                 {addedNotice ? (
@@ -239,7 +239,7 @@ export default function ProductDetailClient({
               <button
                 type="button"
                 onClick={() => setIsMtcOpen(true)}
-                className="w-full sm:w-auto min-h-[46px] px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-850 text-slate-200 hover:text-white border border-white/10 text-xs font-mono flex items-center justify-center gap-1.5 transition-colors"
+                className="w-full sm:w-auto min-h-[46px] px-4 py-2.5 rounded-xl bg-[#080A0F] hover:bg-[#12161F] text-slate-200 hover:text-white border border-[#2A3241] text-xs font-mono flex items-center justify-center gap-1.5 transition-colors active:scale-95"
               >
                 <FileCheck2 className="h-4 w-4 text-emerald-400" />
                 <span>Sample MTC 3.1</span>
@@ -250,10 +250,10 @@ export default function ProductDetailClient({
 
         {/* Right Column: 3D Interactive Model Viewer with Volumetric Studio Stage */}
         <div className="lg:col-span-6 w-full">
-          <div className="relative w-full h-[620px] sm:h-[680px] rounded-3xl overflow-hidden border border-white/15 shadow-2xl bg-[#030508] group">
+          <div className="relative w-full h-[620px] sm:h-[680px] rounded-3xl overflow-hidden border border-[#2A3241] shadow-2xl bg-[#080A0F] group">
             {/* Volumetric Studio Rim Backlights */}
             <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_35%,rgba(56,189,248,0.14),transparent_65%)]" />
-            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_80%_80%,rgba(239,68,68,0.08),transparent_60%)]" />
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_80%_80%,rgba(249,115,22,0.10),transparent_60%)]" />
             <MetalHeroScene initialModel={modelType} compactControls={false} />
           </div>
         </div>
@@ -270,15 +270,15 @@ export default function ProductDetailClient({
           <h3 className="text-lg font-bold text-white">Engineering Specifications</h3>
 
           <div className="space-y-2 text-xs font-mono text-slate-300">
-            <div className="p-2.5 rounded-lg bg-slate-900/60 flex justify-between">
+            <div className="p-2.5 rounded-lg bg-[#080A0F]/85 border border-[#2A3241]/70 flex justify-between">
               <span className="text-slate-500">Sizes:</span>
               <span className="text-white text-right">{product.sizeRange}</span>
             </div>
-            <div className="p-2.5 rounded-lg bg-slate-900/60 flex justify-between">
+            <div className="p-2.5 rounded-lg bg-[#080A0F]/85 border border-[#2A3241]/70 flex justify-between">
               <span className="text-slate-500">Thickness/Class:</span>
               <span className="text-cyan-300 text-right">{product.wallThicknessOrClass}</span>
             </div>
-            <div className="p-2.5 rounded-lg bg-slate-900/60 flex justify-between">
+            <div className="p-2.5 rounded-lg bg-[#080A0F]/85 border border-[#2A3241]/70 flex justify-between">
               <span className="text-slate-500">Primary Standard:</span>
               <span className="text-white text-right">{product.standards[0]}</span>
             </div>
@@ -295,22 +295,22 @@ export default function ProductDetailClient({
 
           <div className="flex flex-wrap gap-1.5">
             {product.grades.stainlessSteel?.map((g) => (
-              <span key={g} className="px-2 py-1 rounded bg-[#030508]/80 border border-white/8 text-[11px] font-mono text-slate-200">
+              <span key={g} className="px-2 py-1 rounded bg-[#080A0F]/85 border border-[#2A3241] text-[11px] font-mono text-slate-200">
                 {g}
               </span>
             ))}
             {product.grades.highNickel?.map((g) => (
-              <span key={g} className="px-2 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-[11px] font-mono text-amber-300">
+              <span key={g} className="px-2 py-1 rounded bg-amber-500/10 border border-amber-500/25 text-[11px] font-mono text-amber-300">
                 {g}
               </span>
             ))}
             {product.grades.duplexSuperDuplex?.map((g) => (
-              <span key={g} className="px-2 py-1 rounded bg-cyan-500/10 border border-cyan-500/20 text-[11px] font-mono text-cyan-300">
+              <span key={g} className="px-2 py-1 rounded bg-cyan-500/10 border border-cyan-500/25 text-[11px] font-mono text-cyan-300">
                 {g}
               </span>
             ))}
             {product.grades.carbonSteel?.map((g) => (
-              <span key={g} className="px-2 py-1 rounded bg-[#030508]/80 border border-white/8 text-[11px] font-mono text-slate-300">
+              <span key={g} className="px-2 py-1 rounded bg-[#080A0F]/85 border border-[#2A3241] text-[11px] font-mono text-slate-300">
                 {g}
               </span>
             ))}
@@ -329,7 +329,7 @@ export default function ProductDetailClient({
             Witnessed testing arranged routinely with Lloyd's Register (LRIS), DNV, TUV, Bureau Veritas, and IBR.
           </p>
 
-          <div className="p-3 rounded-2xl bg-[#030508]/80 border border-white/8 space-y-1 text-xs font-mono">
+          <div className="p-3 rounded-2xl bg-[#080A0F]/85 border border-[#2A3241] space-y-1 text-xs font-mono">
             <div className="text-white font-bold flex items-center gap-1.5">
               <Anchor className="h-3.5 w-3.5 text-cyan-400" />
               <span>Direct Port Loading</span>

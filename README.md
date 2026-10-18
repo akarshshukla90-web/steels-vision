@@ -8,6 +8,8 @@
 [![ISO 14001:2015](https://img.shields.io/badge/ISO-14001%3A2015-green.svg)](https://www.steelsvision.com)
 [![ISO 45001:2018](https://img.shields.io/badge/ISO-45001%3A2018-blue.svg)](https://www.steelsvision.com)
 [![TPI Inspection Ready](https://img.shields.io/badge/TPI-Lloyd's%20%7C%20DNV%20%7C%20TUV%20%7C%20BV%20%7C%20IBR-orange.svg)](https://www.steelsvision.com)
+[![CI & Quality Assurance](https://github.com/akarshshukla90-web/steels-vision/actions/workflows/ci.yml/badge.svg)](https://github.com/akarshshukla90-web/steels-vision/actions)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fakarshshukla90-web%2Fsteels-vision)
 
 ---
 
@@ -167,3 +169,30 @@ npm run build
    npm run dev
    ```
 3. Open `http://localhost:3000` in your browser.
+
+---
+
+## Production Deployment & Hosting
+
+### Option 1: Live Deployment on Vercel via GitHub (Recommended)
+This platform natively executes Next.js Turbopack, Three.js WebGL scenes, Remotion animations, and the serverless B2B RFQ intake API (`/api/rfq`) routing to `steelsvision@gmail.com`.
+
+1. **Push your repository to GitHub:**
+   ```bash
+   git remote add origin https://github.com/<your-username>/steels-vision.git
+   git branch -M main
+   git push -u origin main
+   ```
+2. **Deploy on Vercel:**
+   - Go to [vercel.com/new](https://vercel.com/new).
+   - Import your `steels-vision` GitHub repository.
+   - Framework preset: **Next.js** (detected automatically).
+   - Click **Deploy**. Vercel will build and assign an instant production URL with automatic HTTPS and global edge CDN.
+
+### Option 2: Continuous Integration (GitHub Actions)
+Every `git push` to `main` automatically triggers `.github/workflows/ci.yml` which validates:
+- Metallurgical formulas calculation accuracy (`verify_formulas.ts`).
+- Remotion frame interpolation and physics bounds (`test_remotion_compositions.ts`).
+- RFQ payload aggregation and email router integrity (`test_api_rfq.ts`).
+- Production build compilation (`next build`).
+

@@ -1,0 +1,37 @@
+name: CI & Metallurgical Quality Assurance
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify-and-build:
+    name: Test & Build Next.js WebGL Engine
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Production Dependencies
+        run: npm ci
+
+      - name: Run Metallurgical Formulas Verification (Page 16 Accuracy)
+        run: npx tsx tests/verify_formulas.ts
+
+      - name: Run Remotion Video & Frame Physics Suite
+        run: npx tsx tests/test_remotion_compositions.ts
+
+      - name: Run B2B RFQ Logic & Payload Router Suite
+        run: npx tsx tests/test_api_rfq.ts
+
+      - name: Build Next.js Production Bundle (Turbopack)
+        run: npm run build
